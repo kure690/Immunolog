@@ -175,16 +175,17 @@
 
         <div class="log-in">
             <h2 style="font-size: 65px;"> Sign in</h2>
-            <form>
-                <input type="email" id="email" name="email" placeholder="E-mail" required>
+            <form action="{% url 'home' %}" method="POST">
+                {% csrf_token %}
+                <input type="email" id="email" name="email" placeholder="Email" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
                 <div class="form-footer">
                     <div class="forgot-pass">
-                        <a href="" class="forgot-password">Forgot your password?</a>
+                        <a href="#" class="forgot-password">Forgot your password?</a>
                     </div>
                     <div class="checkbox">
                         <input type="checkbox" id="terms" name="terms" required>
-                        <label for="terms">I agree to the <a href="">terms of service</a> and <a href="">privacy policy</a></label>
+                        <label for="terms">I agree to the <a href="#">terms of service</a> and <a href="#">privacy policy</a></label>
                     </div>
                 </div>
                 <button type="submit">Sign in</button>
@@ -198,7 +199,7 @@
                     <button class="linkedin"><i class="fa-brands fa-linkedin-in"></i></i></button>
                 </div>
             </div>
-            <p class="signup-link">Don't have an account? <a href="/signup">Sign up here</a></p>
+            <p class="signup-link">Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
         </div>
     </div>
 </body>
