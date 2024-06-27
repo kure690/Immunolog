@@ -12,26 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
 def home(request):
-    if request.method == "POST":
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        # First, get the user by email
-        try:
-            user = CustomUser.objects.get(email=email)
-        except CustomUser.DoesNotExist:
-            user = None
-
-        # If user exists, authenticate using the username
-        if user:
-            auth_user = authenticate(request, username=user.username, password=password)
-            if auth_user is not None:
-                login(request, auth_user)
-                messages.success(request, "Successfully logged in.")
-                return redirect('dashboard')
-        
-        messages.error(request, "Invalid email or password.")
-    
     return render(request, "authentication/index.html")
 
 def signup(request):
@@ -78,10 +58,34 @@ def signup(request):
     return render(request, "authentication/signup.html")
 
 
+def signin(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            messages.error(request, "Invalid email or password.")
+            return render(request, "authentication/signin.html")
+
+        auth_user = authenticate(request, username=user.username, password=password)
+        if auth_user is not None:
+            login(request, auth_user)
+            messages.success(request, "Successfully logged in.")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "Invalid email or password.")
+
+
+    return render(request, "authentication/signin.html")
+    
+
+
 def signout(request):
     logout(request)
     messages.success(request, "Logged Out Successfully!")
-    return redirect('home')
+    return redirect('signin')
 
 @login_required
 def dashboard(request):
