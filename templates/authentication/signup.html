@@ -1,20 +1,71 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Sign Up</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h3>Sign Up</h3>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <h2>Sign Up</h2>
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
         
-        <script src="" async defer></script>
-    </body>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div>
+            <label for="email">Email (will be used for login):</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div>
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required>
+        </div>
+        
+        <div>
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required>
+        </div>
+        
+        <div>
+            <label for="birthday">Birthday:</label>
+            <input type="text" id="birthday" name="birthday" required>
+        </div>
+        
+        <div>
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required>
+        </div>
+        
+        <div>
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required>
+        </div>
+        
+        <div>
+            <button type="submit">Sign Up</button>
+        </div>
+    </form>
+
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#birthday", {
+            dateFormat: "m/d/Y",
+            maxDate: "today",
+            altInput: true,
+            altFormat: "F j, Y",
+            disableMobile: true
+        });
+    </script>
+</body>
 </html>
