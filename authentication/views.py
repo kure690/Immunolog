@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
 def home(request):
-    return render(request, "authentication/index.html")
+    return render(request, "authentication/signin.html")
 
 def signup(request):
     if request.method == "POST":
