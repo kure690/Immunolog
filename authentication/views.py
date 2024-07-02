@@ -58,7 +58,7 @@ def signup(request):
     return render(request, "authentication/signup.html")
 
 
-def signin(request):
+def signin_user(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -78,9 +78,30 @@ def signin(request):
             messages.error(request, "Invalid email or password.")
 
 
-    return render(request, "authentication/signin.html")
-    
+    return render(request, "authentication/signin_user.html")
 
+def signin_admin(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            messages.error(request, "Invalid email or password.")
+            return render(request, "authentication/signin.html")
+
+        auth_user = authenticate(request, username=user.username, password=password)
+        if auth_user is not None:
+            login(request, auth_user)
+            messages.success(request, "Successfully logged in.")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "Invalid email or password.")
+
+
+    return render(request, "authentication/signin_admin.html")
+    
 
 def signout(request):
     logout(request)
