@@ -2,3 +2,6 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #23C3D9;
 }
+.custom-spacing {
+    margin-bottom: 20px;
+}
