@@ -10,6 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.http import Http404
+from django.contrib.auth import get_user_model
+from records.models import VaccineRecord
 
 # Create your views here.
 
@@ -72,22 +74,26 @@ def signup(request):
 
 def signin(request):
     if request.method == "POST":
-        email = request.POST.get('email')
+        username_or_email = request.POST.get('username_or_email')
         password = request.POST.get('password')
 
-        try:
-            user = CustomUser.objects.get(email=email)
-        except CustomUser.DoesNotExist:
-            messages.error(request, "Invalid email or password.")
-            return render(request, "authentication/signin.html")
+        UserModel = get_user_model()
 
-        auth_user = authenticate(request, username=user.username, password=password)
-        if auth_user is not None:
-            login(request, auth_user)
+        superuser = authenticate(request, username=username_or_email, password=password)
+        if superuser and superuser.is_superuser:
+            login(request, superuser)
             return redirect('dashboard')
-        else:
+        
+        try:
+            user = UserModel.objects.get(email=username_or_email)
+            auth_user = authenticate(request, username=user.username, password=password)
+            if auth_user:
+                login(request, auth_user)
+                return redirect('dashboard')
+            else:
+                messages.error(request, "Invalid email or password.")
+        except UserModel.DoesNotExist:
             messages.error(request, "Invalid email or password.")
-
 
     return render(request, "authentication/signin.html")
     
@@ -103,7 +109,8 @@ def dashboard(request):
     user = request.user
     context = {
         'user': user,
-        'pk': user.pk  # Ensure pk is passed to the context
+        'pk': user.pk,
+        'vaccine_records': VaccineRecord.objects.all() if user.is_superuser else VaccineRecord.objects.filter(user=user)
     }
     if user.is_superuser:
         return render(request, 'dashboard/admindashboard.html', context)

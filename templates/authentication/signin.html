@@ -161,6 +161,17 @@
     .signup-link a:hover {
         text-decoration: underline;
     }
+    .form-input,
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+        margin-bottom: 20px;
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+            width: 100%;
+        }
 </style>
 
 <body>
@@ -183,7 +194,7 @@
             {% endfor %}<br>
             <form action="{% url 'signin' %}" method="POST">
                 {% csrf_token %}
-                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="text" id="username_or_email" name="username_or_email" placeholder="Email" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
                 <div class="form-footer">
                     <div class="forgot-pass">
