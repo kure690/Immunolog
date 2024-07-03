@@ -18,6 +18,4 @@ urlpatterns = [
    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='authentication/resetcomplete.html'), name = "password_reset_complete"),
    path('editprofile/<int:pk>/', InfoUpdate.as_view(), name='editprofile'),
  
-]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

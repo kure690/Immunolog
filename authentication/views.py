@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
+from django.http import Http404
 
 # Create your views here.
 
@@ -83,7 +84,6 @@ def signin(request):
         auth_user = authenticate(request, username=user.username, password=password)
         if auth_user is not None:
             login(request, auth_user)
-            messages.success(request, "Successfully logged in.")
             return redirect('dashboard')
         else:
             messages.error(request, "Invalid email or password.")
@@ -105,7 +105,11 @@ def dashboard(request):
         'user': user,
         'pk': user.pk  # Ensure pk is passed to the context
     }
-    return render(request, 'dashboard/customerdashboard.html', context)
+    if user.is_superuser:
+        return render(request, 'dashboard/admindashboard.html', context)
+    else:
+        return render(request, 'dashboard/customerdashboard.html', context)
+
 
 class InfoUpdate(LoginRequiredMixin, UpdateView):
     model = CustomUser
@@ -122,6 +126,8 @@ class InfoUpdate(LoginRequiredMixin, UpdateView):
         return obj
 
     def form_valid(self, form):
+        if 'clear_profile_picture' in self.request.POST:
+            form.instance.profile_picture.delete()
         response = super().form_valid(form)
         if 'profile_picture' in self.request.FILES:
             form.instance.profile_picture = self.request.FILES['profile_picture']
