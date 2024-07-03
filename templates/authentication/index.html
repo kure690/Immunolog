@@ -1,21 +1,144 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Immunolog - Home</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Immunolog</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-
 <body>
-    This is the homepage
-    <br>
-    <a href="{% url 'signin' %}">Sign In</a>
+    <header>
+        <div class="head-section">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+              <div class="featured-image">
+                <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
+              </div>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active fs-5 fw-bold" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link fs-5" href="#">About Us</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link fs-5 btn btn-primary text-white px-4 py-2 ms-2" href="{% url 'signin' %}">Sign In</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          </div>
+          <section>
+            <div class="container pt-5 pb-5"> <!-- Added pb-5 for padding-bottom -->
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-12 col-lg-6">
+                        <h1 class="display-4 fw-bold"><span class="bg"> STORE YOUR VACCINATION RECORD </span></h1>
+                        <p class="lead pb-4 pt-2">Store your vaccination record and get notified when you are eligible for the next dose.</p>
+                        <button class="btn btn-primary px-5 py-3 d-inline-block">Sign Up Now</button>
+                    </div>
+                    <div class="col-12 col-lg-6"></div>
+                </div>
+            </div>
+          </section>
+    </header>
+
+    <div class="container">
+        <div class="row align-items-center gx-3 gy-5 py-5 mt-5">
+            <div class="col-12 col-md-12 col-lg-5">
+                <img src="{% static 'images/Immunolog-Logo-01.png' %}" alt="Immunolog" class="img-fluid mas-auto d-block">
+            </div>
+            <div class="col-12 col-md-12 text-center text-lg-start col-lg-7">
+                <h2 class="text-primary fs-1 pb-3">About Immunolog</h2>
+                <p class="about-text"> A responsive Vaccination Record Management System that allows you to store your vaccination record and get notified when you are eligible for the next dose. </p>
+                <p class="about-text"> This system is designed to help you manage your vaccination record and get notified when you are eligible for the next dose. </p>
+                <button class="tn btn-primary px-5 py-3 mt-3 fs-5 fw-medium" type="button"> Read More </button>
+            </div>
+        </div>
+    </div>
+
+      <div class="features-section py-5">
+        <div class="container">
+            <h2 class="fs-1 fw-bold text-center pt-5 pb-5 text-primary">Key Features</h2>
+            <div class="row g-5 pb-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card px-3 py-4 shadow-sm">
+                        <h3 class="f5">Store your Vaccination Record Effortlessly</h3>
+                        <p class="card-text lead">Store your vaccination records at our robust database where you can access anytime and anywhere</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card px-3 py-4 shadow-sm bg">
+                        <h3 class="f5">Verification of Vaccine Records</h3>
+                        <p class="card-text lead">Verify your vaccination records through our team with various phases of verification.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 offset-md-3 offset-0 offset-lg-0">
+                    <div class="card px-3 py-4 shadow-sm">
+                        <h3 class="f5">24/7 Website Service Uptime Reliability</h3>
+                        <p class="card-text lead">Access your vaccination records anytime you want and anywhere you go incase of verification purposes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <div class="container py-5 mb-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="fw-bold text-primary fs-1 pb-3 text-center">How It Works</h2>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">How to use Immunolog?</button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                          <p class="lead">To use Immunolog, simply sign up, log in, and start storing and managing your vaccination records effortlessly.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">What is Immunolog?</button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                          <p class="lead">Immunolog is a responsive Vaccination Record Management System that allows you to store your vaccination records and get notified when you are eligible for the next dose.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">How can you ensure data privacy?</button>
+                      </h2>
+                      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                          <p class="lead">Immunolog is accredited by the Department of Health and is partnered with various hospitals such as Chong Hua Hospital, UC Med, and other hospitals.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div> 
+        </div>
+      </div>
+
+      <footer class="footer-section">
+        <p class="text-center py-5 mb-0">
+          &copy; 2024 Immunolog. All rights reserved.
+        </p>
+      </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
 </body>
 </html>
