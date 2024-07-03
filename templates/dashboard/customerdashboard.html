@@ -13,8 +13,10 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <h3>hello user</h3>
+        <h3>hello {{ user.username }}</h3>
         <a href="{% url 'signout' %}">Sign Out</a>
+        <a href="{% url 'addrecord' %}">Add Record</a>
+        <a href="{% url 'editprofile' pk=pk %}">Edit Profile</a>
         
         <script src="" async defer></script>
     </body>

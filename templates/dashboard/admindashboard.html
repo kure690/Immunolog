@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    Hi {{ user.username }}
+    <a href="{% url 'signout' %}">Sign Out</a>
+    <h1>Admin Dashboard</h1>
+    <h2>Vaccine Records</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Vaccination Date</th>
+                <th>Name</th>
+                <th>Vaccine Type</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in vaccine_records %}
+            <tr>
+                <td>{{ record.vaccination_date }}</td>
+                <td>{{ record.user.username }}</td>
+                <td>{{ record.vaccine_type }}</td>
+                <td><a href="{% url 'accept_vaccine_record' pk=record.pk %}" class="action-link">Accept</a></td>
+                <td><a href="" class="action-link">Reject</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No vaccine records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

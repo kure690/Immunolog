@@ -13,7 +13,9 @@
         <div class="head-section">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand fw-bold fs-2" href="#">Immunolog</a>
+              <div class="featured-image">
+                <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
+              </div>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -23,28 +25,25 @@
                     <a class="nav-link active fs-5 fw-bold" aria-current="page" href="#">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fs-5" href="#">About</a>
+                    <a class="nav-link fs-5" href="#">About Us</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link fs-5 btn btn-primary text-white px-4 py-2 ms-2" href="#">Insert</a>
+                    <a class="nav-link fs-5 btn btn-primary text-white px-4 py-2 ms-2" href="{% url 'signin' %}">Sign In</a>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
           </div>
-
-          <!---section-->
           <section>
-            <div class="container pt-5">
+            <div class="container pt-5 pb-5"> <!-- Added pb-5 for padding-bottom -->
                 <div class="row align-items-center justify-content-center">
                     <div class="col-12 col-lg-6">
-                        <h1 class="display-4 fw-bold"><span class="bg"> Description </span> here</h1>
-                        <p class="lead pb-4 pt-2">more description here.......</p>
-                        <button class="btn btn-primary px-5 py-3 d-inline-block">Button</button>
+                        <h1 class="display-4 fw-bold"><span class="bg"> STORE YOUR VACCINATION RECORD </span></h1>
+                        <p class="lead pb-4 pt-2">Store your vaccination record and get notified when you are eligible for the next dose.</p>
+                        <a class="btn btn-primary px-5 py-3 d-inline-block" href="{% url 'signup' %}">Sign Up Now</a>
                     </div>
                     <div class="col-12 col-lg-6"></div>
-                    <img src="" alt="image here pls change this" class="imag-fluid">
                 </div>
             </div>
           </section>
@@ -53,12 +52,12 @@
     <div class="container">
         <div class="row align-items-center gx-3 gy-5 py-5 mt-5">
             <div class="col-12 col-md-12 col-lg-5">
-                <img src="add image here" alt="img here" class="img-fluid mas-auto d-block">
+                <img src="{% static 'images/Immunolog-Logo-01.png' %}" alt="Immunolog" class="img-fluid mas-auto d-block">
             </div>
             <div class="col-12 col-md-12 text-center text-lg-start col-lg-7">
                 <h2 class="text-primary fs-1 pb-3">About Immunolog</h2>
-                <p class="about-text"> decription here...... </p>
-                <p class="about-text"> more description here... </p>
+                <p class="about-text"> A responsive Vaccination Record Management System that allows you to store your vaccination record and get notified when you are eligible for the next dose. </p>
+                <p class="about-text"> This system is designed to help you manage your vaccination record and get notified when you are eligible for the next dose. </p>
                 <button class="tn btn-primary px-5 py-3 mt-3 fs-5 fw-medium" type="button"> Read More </button>
             </div>
         </div>
@@ -70,81 +69,25 @@
             <div class="row g-5 pb-5">
                 <div class="col-md-6 col-lg-4">
                     <div class="card px-3 py-4 shadow-sm">
-                        <h3 class="f5">Something 1</h3>
-                        <p class="card-text lead">description here....</p>
+                        <h3 class="f5">Store your Vaccination Record Effortlessly</h3>
+                        <p class="card-text lead">Store your vaccination records at our robust database where you can access anytime and anywhere</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="card px-3 py-4 shadow-sm bg">
-                        <h3 class="f5">Something 2</h3>
-                        <p class="card-text lead">description here....</p>
+                        <h3 class="f5">Verification of Vaccine Records</h3>
+                        <p class="card-text lead">Verify your vaccination records through our team with various phases of verification.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 offset-md-3 offset-0 offset-lg-0">
                     <div class="card px-3 py-4 shadow-sm">
-                        <h3 class="f5">Something 3</h3>
-                        <p class="card-text lead">description here....</p>
+                        <h3 class="f5">24/7 Website Service Uptime Reliability</h3>
+                        <p class="card-text lead">Access your vaccination records anytime you want and anywhere you go incase of verification purposes.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="container my-5">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-12">
-            <h2 class="fs-1 fw-bold text-primary text-center pb-5">Our Products</h2>
-            <ul class="nav nav-tabs d-flex flx-wrap justify-content-center" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button class="nav-link active me-md-3 me-1 text-dark" id="" data-bs-toggle="tab" data-bs-target="#" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link me-md-3 me-1 text-dark" id="" data-bs-toggle="tab" data-bs-target="#" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Virtual Reality</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link me-md-3 me-1 text-dark" id="" data-bs-toggle="tab" data-bs-target="#" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Headphones</button>
-              </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="" role="tabpanel" aria-labelledby="" tabindex="0">
-                <div class="row g-4 mt-5 justify-content-center align-items-center">
-                  <div class="col-12 col-md-4">
-                    <img
-                      src=""
-                      alt=""
-                      class="img-fluid  d-block mx-auto"
-                    />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <img src="" alt="" class="img-fluid  d-block mx-auto" />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <img src="" alt="" class="img-fluid  d-block mx-auto" />
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="" role="tabpanel" aria-labelledby="" tabindex="0">
-                <div class="row mt-5 g-4">
-                  <div class="col-12 col-md-4">
-                    <img src="" alt="" class="img-fluid" />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <img src="" alt="" class="img-fluid" />
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="" role="tabpanel"  aria-labelledby="" tabindex="0"
-              >
-                <div class="row g-4 mt-5">
-                  <div class="col-12 col-md-4">
-                    <img src="" alt=""class="img-fluid"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="container py-5 mb-5">
         <div class="row">
@@ -153,31 +96,31 @@
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                       <h2 class="accordion-header">
-                        <button class="accordion-button fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">How can I browse Immunolog?</button>
+                        <button class="accordion-button fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">How to use Immunolog?</button>
                       </h2>
                       <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                          <p class="lead"> Description....</p>
+                          <p class="lead">To use Immunolog, simply sign up, log in, and start storing and managing your vaccination records effortlessly.</p>
                         </div>
                       </div>
                     </div>
                     <div class="accordion-item">
                       <h2 class="accordion-header">
-                        <button class="accordion-button collapsed fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">What is blabla</button>
+                        <button class="accordion-button collapsed fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">What is Immunolog?</button>
                       </h2>
                       <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                          <p class="lead">description......</p>
+                          <p class="lead">Immunolog is a responsive Vaccination Record Management System that allows you to store your vaccination records and get notified when you are eligible for the next dose.</p>
                         </div>
                       </div>
                     </div>
                     <div class="accordion-item">
                       <h2 class="accordion-header">
-                        <button class="accordion-button collapsed fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">How does Immunolog ensure customer satisfaction?</button>
+                        <button class="accordion-button collapsed fs-3 text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">How can you ensure data privacy?</button>
                       </h2>
                       <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                          <p class="lead">description.....</p>
+                          <p class="lead">Immunolog is accredited by the Department of Health and is partnered with various hospitals such as Chong Hua Hospital, UC Med, and other hospitals.</p>
                         </div>
                       </div>
                     </div>
