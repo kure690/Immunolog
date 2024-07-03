@@ -75,6 +75,7 @@ p {
     border: none;
     color: #fff !important;
 }
+
 /***** SIGNIN *****/  /***** START *****/
 body.d-flex.flex-column.min-vh-100 {
     background-color: #dff8ff;
@@ -224,6 +225,7 @@ button.linkedin {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
 .form-input,
 input[type="email"],
 input[type="password"],
@@ -236,5 +238,41 @@ input[type="text"] {
     width: 100%;
 }
 
+/* sign up */
 
+.box-area2 {
+    margin: auto; 
+    padding: 30px;
+    width: 500px; 
+}
 
+.signup-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    color: white;
+    background-color: #25DBF4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto; 
+}
+
+.back-button {
+    padding: 10px;
+    border: none;
+    background-color: white; 
+}
+
+.box-area2 input[type="text"],
+.box-area2 input[type="email"],
+.box-area2 input[type="password"],
+.box-area2 select {
+    padding: 10px; 
+    font-size: 1em; 
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-bottom: 20px; 
+    border-radius: 5px;
+}
