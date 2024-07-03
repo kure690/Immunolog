@@ -20,7 +20,11 @@ def signup(request):
         email = request.POST['email']
         fname = request.POST['fname']
         lname = request.POST['lname']
+        sex = request.POST['sex']
         birthday_str = request.POST['birthday']
+        address = request.POST['address']
+        occupation = request.POST['occupation']
+        civil_status = request.POST['civil_status']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
