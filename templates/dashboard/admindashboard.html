@@ -1,57 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    Hi {{ user.username }}
-    <a href="{% url 'signout' %}">Sign Out</a>
-    <h1>Admin Dashboard</h1>
-    <h2>Vaccine Records</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Vaccination Date</th>
-                <th>Name</th>
-                <th>Vaccine Type</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in vaccine_records %}
-            <tr>
-                <td>{{ record.vaccination_date }}</td>
-                <td>{{ record.user.username }}</td>
-                <td>{{ record.vaccine_type }}</td>
-                <td><a href="{% url 'accept_vaccine_record' pk=record.pk %}" class="action-link">Accept</a></td>
-                <td><a href="" class="action-link">Reject</a></td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">No vaccine records found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">ImmunoLog</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        Hi {{ user.username }}
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'signout' %}" class="nav-link">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="https://cdn.builder.io/api/v1/image/assets/TEMP/5af3f88dbb9d7ca446730b527f9b2fac36cf9a509f39b20a20d6865ce8e700d3?apiKey=08d8ca6c836047b986da4ef5cdc4a6c0&" alt="Admin profile picture">
+                    <div class="card-body">
+                        <h5 class="card-title">Hi Admin!</h5>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">Unverified Application</a>
+                            <a href="#" class="list-group-item list-group-item-action">Verified Application</a>
+                            <a href="#" class="list-group-item list-group-item-action">Rejected Application</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h1>Admin Dashboard</h1>
+                <h2>Vaccine Records</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Vaccination Date</th>
+                            <th>Name</th>
+                            <th>Vaccine Type</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in vaccine_records %}
+                        <tr>
+                            <td>{{ record.vaccination_date }}</td>
+                            <td>{{ record.user.username }}</td>
+                            <td>{{ record.vaccine_type }}</td>
+                            <td><a href="{% url 'accept_vaccine_record' pk=record.pk %}" class="btn btn-success">Accept</a></td>
+                            <td><a href="" class="btn btn-danger">Reject</a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">No vaccine records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item">
+                            <span class="page-link">Page 01 of 03</span>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">
+                                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9fa79e8cbe7abd92573c7d8ad26f8ec9da80f2fe060c80194345c811e1acd09?apiKey=08d8ca6c836047b986da4ef5cdc4a6c0&" alt="Next page arrow" width="23">
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
