@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .current-image {
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+        .profile-picture {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <div class="profile-picture">
+            {% if form.instance.profile_picture %}
+                <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{{ MEDIA_URL }}profilepicdefault.jpg" alt="Default Profile Picture">
+            {% endif %}
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div>
+                <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+                {{ form.first_name }}
+            </div>
+            
+            <div>
+                <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+                {{ form.last_name }}
+            </div>
+            
+            <div>
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+            </div>
+            
+            <div>
+                <label for="{{ form.sex.id_for_label }}">Sex:</label>
+                {{ form.sex }}
+            </div>
+            
+            <div>
+                <label for="{{ form.address.id_for_label }}">Address:</label>
+                {{ form.address }}
+            </div>
+            
+            <div>
+                <label for="{{ form.birthday.id_for_label }}">Birthday:</label>
+                {{ form.birthday }}
+            </div>
+            
+            <div>
+                <label for="{{ form.occupation.id_for_label }}">Occupation:</label>
+                {{ form.occupation }}
+            </div>
+            
+            <div>
+                <label for="{{ form.civil_status.id_for_label }}">Civil Status:</label>
+                {{ form.civil_status }}
+            </div>
+            
+            <div>
+                <label for="{{ form.profile_picture.id_for_label }}">Change:</label>
+                {{ form.profile_picture.as_widget }}
+                {% if form.profile_picture.field.widget.attrs.clear_checkbox_label %}
+                    <label for="{{ form.profile_picture.field.widget.attrs.clear_checkbox_label }}">
+                        {{ form.profile_picture.field.widget.attrs.clear_checkbox_label }}
+                    </label>
+                    {{ form.profile_picture.field.widget.attrs.clear_checkbox }}
+                {% endif %}
+            </div>
+            
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#{{ form.birthday.id_for_label }}", {
+            dateFormat: "Y-m-d",
+            maxDate: "today",
+            altInput: true,
+            altFormat: "F j, Y",
+            disableMobile: true
+        });
+    </script>
+</body>
+</html>

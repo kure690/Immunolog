@@ -6,6 +6,7 @@ class CustomUser(AbstractUser):
     address = models.CharField(max_length=255, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     occupation = models.CharField(max_length=255, null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     civil_status = models.CharField(max_length=20, choices=[
         ('SINGLE', 'Single'),
         ('MARRIED', 'Married'),

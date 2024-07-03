@@ -6,6 +6,9 @@ from django.utils.dateparse import parse_date
 from datetime import datetime
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -52,7 +55,11 @@ def signup(request):
             first_name=fname,
             last_name=lname,
             password=password1,
-            birthday=birthday_date
+            birthday=birthday_date,
+            sex = sex,
+            address = address,
+            occupation = occupation,
+            civil_status = civil_status
         )
 
         user.save()
@@ -93,4 +100,30 @@ def signout(request):
 
 @login_required
 def dashboard(request):
-    return render(request, "dashboard/customerdashboard.html")
+    user = request.user
+    context = {
+        'user': user,
+        'pk': user.pk  # Ensure pk is passed to the context
+    }
+    return render(request, 'dashboard/customerdashboard.html', context)
+
+class InfoUpdate(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    fields = ['first_name', 'last_name', 'email', 'sex', 'address', 'birthday', 'occupation', 'civil_status', 'profile_picture']
+    template_name = 'authentication/editprofile.html'
+
+    def get_success_url(self):
+        return reverse_lazy('editprofile', kwargs={'pk': self.object.pk})
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj != self.request.user:
+            raise Http404("You are not allowed to access this page.")
+        return obj
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if 'profile_picture' in self.request.FILES:
+            form.instance.profile_picture = self.request.FILES['profile_picture']
+            form.instance.save()
+        return response
