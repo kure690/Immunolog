@@ -6,9 +6,15 @@ body {
     min-height: 100vh;
     margin: 0; 
     background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0; 
+    background-color: #ffffff;
 }
 
 header {
+    background-color: #dff8ff; /* Changed background color to blue */
     background-color: #dff8ff; /* Changed background color to blue */
 }
 
@@ -17,6 +23,7 @@ header {
 }
 
 .navbar-brand, .text-primary {
+    color: #ffffff;
     color: #ffffff;
 }
 
@@ -27,18 +34,22 @@ header {
 
 .head-section {
     background-color: #ffffff; /* Changed background color to blue */
+    background-color: #ffffff; /* Changed background color to blue */
 }
 
 .btn-primary {
+    background-color: #00C2FF !important;
     background-color: #00C2FF !important;
     border: none;
 }
 
 .btn-primary:hover {
     background-color: #0000FF !important; /* Changed hover background color to blue */
+    background-color: #0000FF !important; /* Changed hover background color to blue */
 }
 
 .nav-link:hover {
+    color: #0000FF; /* Changed hover text color to blue */
     color: #0000FF; /* Changed hover text color to blue */
 }
 
@@ -48,14 +59,17 @@ p {
 
 .bg {
     color: #00C2FF;
+    color: #00C2FF;
 }
 
 .text-primary {
+    color: #ffffff; /* Changed text color to blue */
     color: #ffffff; /* Changed text color to blue */
 }
 
 .nav-tabs .nav-link.active .nav-tabs .nav-link.active .nav-tabs .nav-link.active {
     border:none !important;
+    background-color: #ffffff;
     background-color: #ffffff;
     columns: white;
 }
@@ -66,11 +80,13 @@ p {
 
 .nav-tabs .active {
     background-color: #00C2FF !important; /* Changed active tab background color to blue */
+    background-color: #00C2FF !important; /* Changed active tab background color to blue */
     border: none;
     color: #fff !important; 
 }
 
 .footer-section {
+    background-color: #00C2FF !important; /* Changed footer background color to blue */
     background-color: #00C2FF !important; /* Changed footer background color to blue */
     border: none;
     color: #fff !important;
