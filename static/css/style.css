@@ -236,5 +236,66 @@ input[type="text"] {
     width: 100%;
 }
 
+.immunolog-container {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+.brand-name {
+    font-size: 24px;
+    color: #007bff;
+}
+
+.sidebar {
+    width: 250px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.menu-container .menu-item {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.menu-container .menu-divider {
+    border-color: #ddd;
+}
+
+.main-panel {
+    background-color: #f8f9fa;
+}
+
+.table thead th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.table tbody tr {
+    background-color: #fff;
+}
+
+.page-number {
+    font-size: 14px;
+    color: #007bff;
+}
+
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
 
 
