@@ -25,8 +25,8 @@
 <body>
     Hi {{ user.username }}
     <a href="{% url 'signout' %}">Sign Out</a>
-    <a href="{% url 'signout' %}">Verified Application</a>
-    <a href="{% url 'signout' %}">Rejected Application</a>
+    <a href="{% url 'verified' %}">Verified Application</a>
+    <a href="{% url 'rejected' %}">Rejected Application</a>
     <h1>Admin Dashboard</h1>
     <h2>Vaccine Records</h2>
     <table>

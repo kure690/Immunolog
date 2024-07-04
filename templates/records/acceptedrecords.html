@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <h2>Vaccine Records</h2>
+        <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Vaccination Date</th>
+                <th></th>
+                <th>Name</th>
+                <th></th>
+                <th>Vaccine Type</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in vaccine_records %}
+            <tr>
+                <td>{{ record.vaccination_date }}</td>
+                <td></td>
+                <td>{{ record.user.username }}</td>
+                <td></td>
+                <td>{{ record.vaccine_type }}</td>
+                <td></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No vaccine records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        <script src="" async defer></script>
+    </body>
+</html>
