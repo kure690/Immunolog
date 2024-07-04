@@ -140,3 +140,24 @@ class InfoUpdate(LoginRequiredMixin, UpdateView):
             form.instance.profile_picture = self.request.FILES['profile_picture']
             form.instance.save()
         return response
+    
+class VaccineRecord(models.Model):
+    STATUS_CHOICES = [
+        ('verified', 'Verified'),
+        ('under_review', 'Under Review'),
+        ('rejected', 'Rejected'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='under_review')
+    vaccination_date = models.DateField()
+    submission_date = models.DateTimeField(auto_now_add=True)
+    vaccine_type = models.CharField(max_length=100)
+    proof_document = models.ImageField(upload_to='vaccine_pics/')
+    
+    # Optional fields for additional features
+    authenticated_by_admin = models.BooleanField(default=False)
+    authenticated_by_doctor = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.vaccine_type} on {self.vaccination_date}"
