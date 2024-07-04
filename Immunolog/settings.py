@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Immunolog',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'Generic123',
         'HOST': 'localhost',
         'PORT': '5432'
     }

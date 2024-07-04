@@ -31,9 +31,10 @@
             <div class="row border rounded-5 p-3 bg-white shadow box-area">
                 <div class="col-md-12 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="
                 padding-top: 24px;">
-                    <form>
-                        <input type="email" id="email" name="email" placeholder="E-mail" required>
-                        <input type="password" id="password" name="password" placeholder="Password" required style="margin-bottom: 0px;">
+                    <form action="{% url 'signin' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" id="username_or_email" name="username_or_email" placeholder="Email" required>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
                         <div class="form-footer">
                             <div class="forgot-pass">
                                 <a href="{% url 'reset_password' %}" class="forgot-password">Forgot your password?</a>
