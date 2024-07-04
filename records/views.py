@@ -81,4 +81,10 @@ class RejectedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return self.request.user.is_superuser
     
     def test_func(self):
-        return self.request.user.is_authenticated    
+        return self.request.user.is_authenticated 
+
+@login_required
+def delete_vaccine_record(request, pk):
+    record = get_object_or_404(VaccineRecord, pk=pk)
+    record.delete()
+    return redirect('dashboard')   

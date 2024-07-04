@@ -35,7 +35,7 @@
                         <td>{{ record.vaccine_type }}</td>
                         <td>{{ record.status }}</td>
                         <td><a href="" class="action-link">Edit</a></td>
-                        <td><a href="" class="action-link">Delete</a></td>
+                        <td><a href="{% url 'delete_vaccine_record' pk=record.pk %}" class="action-link">Delete</a></td>
                         <td></td>
                     </tr>
                     {% endfor %}
