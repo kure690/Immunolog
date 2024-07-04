@@ -24,3 +24,17 @@ def accept_vaccine_record(request, pk):
     record.status = 'verified'
     record.save()
     return redirect('dashboard')
+
+class UserVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = VaccineRecord
+    context_object_name = 'vaccine_records'
+    template_name = 'dashboard/customerdashboard.html'
+
+    def get_queryset(self):
+        return VaccineRecord.objects.filter(user=self.request.user)
+
+    def test_func(self):
+        return self.request.user.is_not_superuser
+    
+    def test_func(self):
+        return self.request.user.is_authenticated
