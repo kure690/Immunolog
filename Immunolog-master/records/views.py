@@ -60,7 +60,7 @@ class AcceptedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def test_func(self):
         return self.request.user.is_authenticated 
     
-    class RejectedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class RejectedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = VaccineRecord
     context_object_name = 'vaccine_records'
     template_name = 'records/acceptedrecords.html'
