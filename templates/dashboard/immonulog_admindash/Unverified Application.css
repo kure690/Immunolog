@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
 }
 .header {
@@ -233,13 +233,24 @@
 
 .list-header {
     display: flex;
-    width: 837px;
+    justify-content: space-between;
+    width: 100%;
     max-width: 100%;
-    gap: 20px;
-    font-size: 32px;
+    gap: 60px;
+    font-size: 30px;
     color: #000;
     font-weight: 400;
     line-height: 75%;
+}
+
+.item-details-two {
+    flex: 1;
+    justify-content: space-between;
+    max-width: 680px;
+}
+
+.hidden {
+    width: 236px;
 }
 
 @media (max-width: 991px) {
