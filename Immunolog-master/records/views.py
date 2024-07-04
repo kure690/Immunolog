@@ -38,3 +38,24 @@ class UserVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
     
     def test_func(self):
         return self.request.user.is_authenticated
+    
+    @login_required
+def reject_vaccine_record(request, pk):
+    record = get_object_or_404(VaccineRecord, pk=pk)
+    record.status = 'Rejected'
+    record.save()
+    return redirect('dashboard')
+
+class AcceptedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = VaccineRecord
+    context_object_name = 'vaccine_records'
+    template_name = 'records/acceptedrecords.html'
+
+    def get_queryset(self):
+        return VaccineRecord.objects.filter(status='Verified')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+    def test_func(self):
+        return self.request.user.is_authenticated 
