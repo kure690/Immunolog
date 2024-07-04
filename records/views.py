@@ -32,7 +32,7 @@ def accept_vaccine_record(request, pk):
     return redirect('dashboard')
 
 
-class VaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class UserVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = VaccineRecord
     context_object_name = 'vaccine_records'
     template_name = 'dashboard/customerdashboard.html'
