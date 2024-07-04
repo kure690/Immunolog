@@ -14,6 +14,38 @@
     </head>
     <body>
         <h3>hello {{ user.username }}</h3>
+        <h2>Vaccine Records</h2>
+
+        {% if vaccine_records %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date Administered</th>
+                        <th>Vaccine Name</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in vaccine_records %}
+                    <tr>
+                        <td>{{ record.vaccination_date }}</td>
+                        <td>{{ record.vaccine_type }}</td>
+                        <td>{{ record.status }}</td>
+                        <td><a href="" class="action-link">Edit</a></td>
+                        <td><a href="{% url 'delete_vaccine_record' pk=record.pk %}" class="action-link">Delete</a></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have no vaccine records.</p>
+        {% endif %}
+        
+
         <a href="{% url 'signout' %}">Sign Out</a>
         <a href="{% url 'addrecord' %}">Add Record</a>
         <a href="{% url 'editprofile' pk=pk %}">Edit Profile</a>
