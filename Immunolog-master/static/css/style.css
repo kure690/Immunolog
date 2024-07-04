@@ -1,0 +1,240 @@
+body {
+    color: #555;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0; 
+    background-color: #ffffff;
+}
+
+header {
+    background-color: #dff8ff; /* Changed background color to blue */
+}
+
+.navbar-brand {
+    font-size: 30px;
+}
+
+.navbar-brand, .text-primary {
+    color: #ffffff;
+}
+
+.nav-link {
+    font-weight: 500;
+    font-size: 18px !important;
+}
+
+.head-section {
+    background-color: #ffffff; /* Changed background color to blue */
+}
+
+.btn-primary {
+    background-color: #00C2FF !important;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0000FF !important; /* Changed hover background color to blue */
+}
+
+.nav-link:hover {
+    color: #0000FF; /* Changed hover text color to blue */
+}
+
+p {
+    font-size: 18px;
+}
+
+.bg {
+    color: #00C2FF;
+}
+
+.text-primary {
+    color: #ffffff; /* Changed text color to blue */
+}
+
+.nav-tabs .nav-link.active .nav-tabs .nav-link.active .nav-tabs .nav-link.active {
+    border:none !important;
+    background-color: #ffffff;
+    columns: white;
+}
+
+.nav-tabs {
+    border:none !important;
+}
+
+.nav-tabs .active {
+    background-color: #00C2FF !important; /* Changed active tab background color to blue */
+    border: none;
+    color: #fff !important; 
+}
+
+.footer-section {
+    background-color: #00C2FF !important; /* Changed footer background color to blue */
+    border: none;
+    color: #fff !important;
+}
+/***** SIGNIN *****/  /***** START *****/
+body.d-flex.flex-column.min-vh-100 {
+    background-color: #dff8ff;
+}
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: row; /* Default to row */
+    flex-wrap: wrap; /* Allow wrapping of flex items */
+    justify-content: center;
+    align-items: stretch; /* Ensure both sides stretch to fill the height */
+}
+
+.title {
+    background-color: #dff8ff;
+    color: white;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.title .content {
+    text-align: center;
+}
+
+.title .logo {
+    max-width: 100%; /* Ensure the image scales with the container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.site-title {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.tagline {
+    font-size: 1.2em;
+    color: #f0f0f0;
+}
+
+.log-in {
+    background-color: white;
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.log-in h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="email"], input[type="password"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.form-footer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.forgot-pass {
+    text-align: right;
+    width: 100%;
+}
+
+button[type="submit"] {
+    padding: 15px;
+    font-size: 1em;
+    color: white;
+    background-color: #25DBF4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+button[type="submit"] a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Ensure the text color matches the button text color */
+}
+
+button[type="submit"]:hover {
+    background-color: #21bdd2;
+}
+
+.socials {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.social-buttons button {
+    padding: 10px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+button.google {
+    background-color: #db4437;
+    color: white;
+}
+
+button.microsoft {
+    background-color: #00a4ef;
+    color: white;
+}
+
+button.linkedin {
+    background-color: #0077b5;
+    color: white;
+}
+
+.signup-link {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.signup-link a {
+    color: #6c63ff;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+.form-input,
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+
+
