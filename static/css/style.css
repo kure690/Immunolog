@@ -103,8 +103,8 @@ body.d-flex.flex-column.min-vh-100 {
 }
 
 .title .logo {
-    max-width: 100%; /* Ensure the image scales with the container */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; 
+    height: auto;
 }
 
 .site-title {
