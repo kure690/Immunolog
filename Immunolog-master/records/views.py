@@ -39,7 +39,7 @@ class UserVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def test_func(self):
         return self.request.user.is_authenticated
     
-    @login_required
+@login_required
 def reject_vaccine_record(request, pk):
     record = get_object_or_404(VaccineRecord, pk=pk)
     record.status = 'Rejected'
