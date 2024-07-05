@@ -91,9 +91,9 @@ def signin(request):
                 login(request, auth_user)
                 return redirect('dashboard')
             else:
-                messages.error(request, "Invalid email or password.")
+                print("Invalid email or password.")
         except UserModel.DoesNotExist:
-            messages.error(request, "Invalid email or password.")
+            print("Invalid email or password.")
 
     return render(request, "authentication/signin.html")
     
@@ -101,7 +101,6 @@ def signin(request):
 
 def signout(request):
     logout(request)
-    messages.success(request, "Logged Out Successfully!")
     return redirect('signin')
 
 @login_required

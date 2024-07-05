@@ -251,3 +251,17 @@ table {
         tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+.badge-success {
+    background-color: #28a745;
+    color: #080101;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #000000;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: #070202;
+}
