@@ -67,7 +67,7 @@ def signup(request):
 
         user.save()
         login(request, user)
-        return redirect('home')
+        return redirect('signin')
 
     return render(request, "authentication/signup.html")
 
