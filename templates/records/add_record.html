@@ -4,34 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Vaccine Record</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
+
 <body>
-    <h1>Add New Vaccine Record</h1>
-    
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        {% if form.errors %}
-            <div class="error-message">
-                Please correct the errors below.
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
+            </a>
+            <div class="ml-auto">
+                Hi {{ user.username }}
+                <a href="{% url 'signout' %}" class="btn btn-link">Sign Out</a>
             </div>
-        {% endif %}
-        
-        {% for field in form %}
-            <div>
-                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                {{ field }}
-                {% if field.errors %}
-                    <div class="field-error">
-                        {{ field.errors }}
+        </div>
+    </nav>
+
+    <!-- main content and sidebar -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <aside>
+                    <div class="card mb-3" style="border: none; border-radius: 50%; padding: 20px; background-color: #25dbf4; width: 250px; height: 250px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                        <div class="profile-picture-container" style="background-color: #ffffff; border-radius: 50%; width: 203px; height: 203px; display: flex; align-items: center; justify-content: center;">
+                            <img loading="lazy" src="path_to_image.jpg" class="img-fluid rounded-circle" style="width: 100%;" alt="">
+                        </div>
                     </div>
-                {% endif %}
+                    <div class="card mt-n4" style="background-color: #25dbf4; border-radius: 20px; border: none;">
+                        <div class="card-body text-center">
+                            <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif; color: #fff;">Hi {{ user.username }}!</h2>
+                            <div class="list-group mt-3">
+                                <a href="#" class="list-group-item list-group-item-action" style="background-color: #fff; color: #25dbf4; font-weight: 600; border-radius: 20px;">Vaccine Records</a>
+                                <br>
+                                <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Edit Profile</a>
+                                <br>
+                                <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
+                                <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
             </div>
-        {% endfor %}
-        
-        <button type="submit">Add Record</button>
-    </form>
-    
-    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <h1>Add New Vaccine Record</h1>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="error-message">
+                            Please correct the errors below.
+                        </div>
+                    {% endif %}
+                    
+                    {% for field in form %}
+                        <div>
+                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="field-error">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    
+                    <button type="submit">Add Record</button>
+                </form>
+                
+                <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
