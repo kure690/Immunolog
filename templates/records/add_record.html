@@ -7,6 +7,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -23,7 +24,6 @@
         </div>
     </nav>
 
-    <!-- main content and sidebar -->
     <div class="container mt-4">
         <div class="row">
             <!-- Sidebar -->
@@ -52,33 +52,63 @@
 
             <!-- Main Content -->
             <div class="col-md-9">
-                <h1>Add New Vaccine Record</h1>
-                
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    {% if form.errors %}
-                        <div class="error-message">
-                            Please correct the errors below.
-                        </div>
-                    {% endif %}
-                    
-                    {% for field in form %}
-                        <div>
-                            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                            {{ field }}
-                            {% if field.errors %}
-                                <div class="field-error">
-                                    {{ field.errors }}
+                <div class="d-flex align-items-center mb-4">
+                    <a href="{% url 'dashboard' %}" class="back-button" style="font-weight: bold; color: #25dbf4;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
+                    <h1 class="text-primary ml-3" style="font-weight: bold; font-size: 3.5rem; color: #25dbf4 !important;">Add Vaccine Record</h1>
+                </div>
+                <div class="card p-4 mt-3" style="background-color: #fbfbf9; border-radius: 20px;">
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    Please correct the errors below.
                                 </div>
                             {% endif %}
-                        </div>
-                    {% endfor %}
-                    
-                    <button type="submit">Add Record</button>
-                </form>
-                
-                <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+                            
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.vaccination_date.id_for_label }}" class="form-label">{{ form.vaccination_date.label }}</label>
+                                        {{ form.vaccination_date }}
+                                        {% if form.vaccination_date.errors %}
+                                            <div class="text-danger">
+                                                {{ form.vaccination_date.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.vaccine_type.id_for_label }}" class="form-label">{{ form.vaccine_type.label }}</label>
+                                        {{ form.vaccine_type }}
+                                        {% if form.vaccine_type.errors %}
+                                            <div class="text-danger">
+                                                {{ form.vaccine_type.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% for field in form %}
+                                    {% if field.name != "vaccination_date" and field.name != "vaccine_type" %}
+                                        <div class="mb-3">
+                                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                            {{ field }}
+                                            {% if field.errors %}
+                                                <div class="text-danger">
+                                                    {{ field.errors }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary" style="font-weight: bold;">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
