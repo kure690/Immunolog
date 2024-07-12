@@ -6,140 +6,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        form div {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"],
-        input[type="email"],
-        select,
-        input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #5cb85c;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #4cae4c;
-        }
-        .current-image {
-            max-width: 100px;
-            margin-bottom: 10px;
-        }
-        .profile-picture {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .profile-picture img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/EditProfile.css' %}">
 </head>
 <body>
-    <div class="container">
-        <a href="{% url 'dashboard' %}">Back to Dashboard</a>
-        <h1>Edit Profile</h1>
-        <div class="profile-picture">
-            {% if form.instance.profile_picture %}
-                <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture">
-            {% else %}
-                <img src="{% static 'imgs/profilepicdefault.jpg' %}" alt="Default Profile Picture">
-            {% endif %}
-        </div>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="input-group">
-                <label for="id_profile_picture">Profile Picture: </label>
-                <input type="file" name="profile_picture" id="id_profile_picture">
-                {% if form.instance.profile_picture %}
-                    <div>
-                        <input type="checkbox" name="clear_profile_picture" id="clear_profile_picture">
-                        <label for="clear_profile_picture">Clear current profile picture</label>
-                    </div>
+    
+        <!-- //sidebar// -->
+    <aside class="col-md-3">
+        <div class="card mb-3" style="border: none; border-radius: 50%; background-color: #25dbf4; width: 250px; height: 250px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+            <div class="profile-picture-container" style="background-color: #ffffff; border-radius: 50%; width: 203px; height: 203px; display: flex; align-items: center; justify-content: center;">
+                {% if user.profile_picture %}
+                    <img loading="lazy" src="{{ user.profile_picture.url }}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+                {% else %}
+                    <img loading="lazy" src="{% static 'imgs/profilepicdefault.jpg' %}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
                 {% endif %}
+                
+                
+                
             </div>
-            
-            <div>
-                <label for="{{ form.first_name.id_for_label }}">First Name:</label>
-                {{ form.first_name }}
+        </div>
+        <div class="card mt-n4" style="background-color: #25dbf4; border-radius: 20px; border: none;">
+            <div class="card-body text-center">
+                <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif; color: #fff;">Hi {{ user.username }}!</h2>
+                <div class="list-group mt-3">
+                    <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action" style="font-weight: 600; border-radius: 20px;" >Vaccine Records</a>
+                    <br>
+                    <a href="" class="list-group-item list-group-item-action text-center" style="background-color: #fff; color: #25dbf4; font-weight: 600; border-radius: 20px;">Edit Profile</a>
+                    <br>
+                    <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
+                    <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
+                </div>
             </div>
-            
-            <div>
-                <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
-                {{ form.last_name }}
+        </div>
+    </aside>
+
+    <!-- //main content// -->
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: row;">
+            <div class="line">
+                <div class="profile-picture-container">
+                    <div class="profile-picture">
+                        {% if form.instance.profile_picture %}
+                            <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture">
+                        {% else %}
+                            <img src="{% static 'imgs/profilepicdefault.jpg' %}" alt="Default Profile Picture">
+                        {% endif %}
+                    </div>
+                    <div class="input-group">
+                        <label for="id_profile_picture">Profile Picture: </label>
+                        <input type="file" name="profile_picture" id="id_profile_picture">
+                        {% if form.instance.profile_picture %}
+                            <div>
+                                <input type="checkbox" name="clear_profile_picture" id="clear_profile_picture">
+                                <label for="clear_profile_picture">Clear current profile picture</label>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            
-            <div>
-                <label for="{{ form.email.id_for_label }}">Email:</label>
-                {{ form.email }}
+            <div class="line2">
+                {% csrf_token %}
+                <div class="first-line">
+                    <div>
+                        <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+                        {{ form.first_name }}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div>
+                        <label for="{{ form.birthday.id_for_label }}">Birthday:</label>
+                        {{ form.birthday }}
+                    </div>
+                    <div>
+                        <label for="{{ form.sex.id_for_label }}">Sex:</label>
+                        {{ form.sex }}
+                    </div>  
+                </div>
+    
+                <div class="second-line">
+                    <div class="email-field">
+                        <label for="{{ form.email.id_for_label }}">Email:</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="address-field">
+                        <label for="{{ form.address.id_for_label }}">Address:</label>
+                        {{ form.address }}
+                    </div>
+                </div>
+                
+                <div class="third-line">
+                    <div class="occupation-field">
+                        <label for="{{ form.occupation.id_for_label }}">Occupation:</label>
+                        {{ form.occupation }}
+                    </div>
+                    <div>
+                        <label for="{{ form.civil_status.id_for_label }}">Civil Status:</label>
+                        {{ form.civil_status }}
+                    </div>
+                </div>
+                
+                <div class="fourth-line">
+                    <button type="submit">Save Changes</button>
+                </div>
+
             </div>
-            
-            <div>
-                <label for="{{ form.sex.id_for_label }}">Sex:</label>
-                {{ form.sex }}
-            </div>
-            
-            <div>
-                <label for="{{ form.address.id_for_label }}">Address:</label>
-                {{ form.address }}
-            </div>
-            
-            <div>
-                <label for="{{ form.birthday.id_for_label }}">Birthday:</label>
-                {{ form.birthday }}
-            </div>
-            
-            <div>
-                <label for="{{ form.occupation.id_for_label }}">Occupation:</label>
-                {{ form.occupation }}
-            </div>
-            
-            <div>
-                <label for="{{ form.civil_status.id_for_label }}">Civil Status:</label>
-                {{ form.civil_status }}
-            </div>
-            
-            <button type="submit">Save Changes</button>
+
         </form>
     </div>
+
+    
+
+    
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
@@ -153,3 +133,4 @@
     </script>
 </body>
 </html>
+cdn.jsdelivr.net
