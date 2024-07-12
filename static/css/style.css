@@ -6,9 +6,15 @@ body {
     min-height: 100vh;
     margin: 0; 
     background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0; 
+    background-color: #ffffff;
 }
 
 header {
+    background-color: #dff8ff; /* Changed background color to blue */
     background-color: #dff8ff; /* Changed background color to blue */
 }
 
@@ -18,6 +24,7 @@ header {
 
 .navbar-brand, .text-primary {
     color: #ffffff;
+    color: #ffffff;
 }
 
 .nav-link {
@@ -26,20 +33,24 @@ header {
 }
 
 .head-section {
-    background-color: #ffffff; /* Changed background color to blue */
+    background-color: #ffffff;
+    background-color: #ffffff; 
 }
 
 .btn-primary {
+    background-color: #00C2FF !important;
     background-color: #00C2FF !important;
     border: none;
 }
 
 .btn-primary:hover {
-    background-color: #0000FF !important; /* Changed hover background color to blue */
+    background-color: #0000FF !important;
+    background-color: #0000FF !important; 
 }
 
 .nav-link:hover {
-    color: #0000FF; /* Changed hover text color to blue */
+    color: #0000FF;
+    color: #0000FF;
 }
 
 p {
@@ -48,14 +59,17 @@ p {
 
 .bg {
     color: #00C2FF;
+    color: #00C2FF;
 }
 
 .text-primary {
-    color: #ffffff; /* Changed text color to blue */
+    color: #ffffff;
+    color: #ffffff; 
 }
 
 .nav-tabs .nav-link.active .nav-tabs .nav-link.active .nav-tabs .nav-link.active {
     border:none !important;
+    background-color: #ffffff;
     background-color: #ffffff;
     columns: white;
 }
@@ -65,16 +79,19 @@ p {
 }
 
 .nav-tabs .active {
-    background-color: #00C2FF !important; /* Changed active tab background color to blue */
+    background-color: #00C2FF !important; 
+    background-color: #00C2FF !important;
     border: none;
     color: #fff !important; 
 }
 
 .footer-section {
-    background-color: #00C2FF !important; /* Changed footer background color to blue */
+    background-color: #00C2FF !important; 
+    background-color: #00C2FF !important;
     border: none;
     color: #fff !important;
 }
+
 /***** SIGNIN *****/  /***** START *****/
 body.d-flex.flex-column.min-vh-100 {
     background-color: #dff8ff;
@@ -82,10 +99,10 @@ body.d-flex.flex-column.min-vh-100 {
 .container {
     flex: 1;
     display: flex;
-    flex-direction: row; /* Default to row */
-    flex-wrap: wrap; /* Allow wrapping of flex items */
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: stretch; /* Ensure both sides stretch to fill the height */
+    align-items: stretch;
 }
 
 .title {
@@ -103,9 +120,9 @@ body.d-flex.flex-column.min-vh-100 {
 }
 
 .title .logo {
-    max-width: 100%; /* Ensure the image scales with the container */
-    height: auto; /* Maintain aspect ratio */
-}
+    max-width: 100%;
+    height: auto;
+} /* Added closing brace */
 
 .site-title {
     font-size: 2.5em;
@@ -174,8 +191,8 @@ button[type="submit"] {
 }
 
 button[type="submit"] a {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Ensure the text color matches the button text color */
+    text-decoration: none;
+    color: inherit;
 }
 
 button[type="submit"]:hover {
@@ -224,17 +241,59 @@ button.linkedin {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
 .form-input,
 input[type="email"],
 input[type="password"],
 input[type="text"] {
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     width: 100%;
+    padding: 0.625em; 
+    margin: 0.625em 0; 
+    box-sizing: border-box; 
+    border: 1px solid #ccc; 
+    border-radius: 0.25em; 
+    font-size: 1em; 
 }
 
+/* sign up */
 
+.box-area2 {
+    flex:1;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: auto; 
+    padding: 30px;
+    width: 500px; 
+}
+
+.signup-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    color: white;
+    background-color: #25DBF4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto; 
+}
+
+.back-button {
+    padding: 10px;
+    border: none;
+    background-color: white; 
+}
+
+.box-area2 input[type="text"],
+.box-area2 input[type="email"],
+.box-area2 input[type="password"],
+.box-area2 select {
+    padding: 10px; 
+    font-size: 1em; 
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-bottom: 20px; 
+    border-radius: 5px;
+}
 

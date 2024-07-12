@@ -8,20 +8,39 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 
-class AddVaccineRecord(LoginRequiredMixin, CreateView):
+# class AddVaccineRecord(LoginRequiredMixin, CreateView):
 
-    def test_func(self):
-        return self.request.user.is_superuser
+#     def test_func(self):
+#         return self.request.user.is_superuser
     
 
-    model = VaccineRecord
-    fields = ['vaccination_date', 'vaccine_type', 'attending_physician_first_name', 'attending_physician_last_name', 'vaccine_venue', 'proof_document']
+#     model = VaccineRecord
+#     fields = ['vaccination_date', 'vaccine_type', 'attending_physician_first_name', 'attending_physician_last_name', 'vaccine_venue', 'proof_document']
+#     success_url = reverse_lazy('dashboard')
+#     template_name = 'records/add_record.html'
+
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         return super().form_valid(form)
+
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView
+from .forms import VaccineRecordForm
+from .models import VaccineRecord
+
+class AddVaccineRecord(LoginRequiredMixin, CreateView):
+    form_class = VaccineRecordForm
     success_url = reverse_lazy('dashboard')
     template_name = 'records/add_record.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
     
 
 @login_required
