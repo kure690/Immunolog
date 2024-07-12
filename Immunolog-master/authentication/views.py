@@ -161,3 +161,9 @@ class VaccineRecord(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.vaccine_type} on {self.vaccination_date}"
+    
+@login_required
+def delete_vaccine_record(request, pk):
+    record = get_object_or_404(VaccineRecord, pk=pk)
+    record.delete()
+    return redirect('dashboard')   
