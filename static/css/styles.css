@@ -1,0 +1,32 @@
+.modal-warning-text {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #25dbf4;
+}
+.modal-body .additional-text {
+    font-size: 1.25rem;
+    text-align: center;
+}
+.modal-header {
+    border-bottom: none;
+}
+.modal-footer {
+    justify-content: center;
+    border-top: none;
+}
+.modal-footer .btn {
+    font-size: 1.25rem;
+    font-weight: bold;
+    width: 100px;
+    border-radius: 20px;
+}
+.modal-footer .btn-primary {
+    background-color: #25dbf4;
+    border: none;
+}
+.modal-footer .btn-secondary {
+    background-color: #ccc;
+    border: none;
+    color: #333;
+}

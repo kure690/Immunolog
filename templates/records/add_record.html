@@ -8,6 +8,42 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .modal-warning-text {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            color: #25dbf4;
+        }
+        .modal-body .additional-text {
+            font-size: 1.25rem;
+            text-align: center;
+        }
+        .modal-header {
+            border-bottom: none;
+        }
+        .modal-footer {
+            justify-content: center;
+            border-top: none;
+        }
+        .modal-footer .btn {
+            font-size: 1.25rem;
+            font-weight: bold;
+            width: 100px;
+            border-radius: 20px;
+        }
+        .modal-footer .btn-primary {
+            background-color: #25dbf4;
+            border: none;
+        }
+        .modal-footer .btn-secondary {
+            background-color: #ccc;
+            border: none;
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -53,7 +89,7 @@
             <!-- Main Content -->
             <div class="col-md-9">
                 <div class="d-flex align-items-center mb-4">
-                    <a href="{% url 'dashboard' %}" class="back-button" style="font-weight: bold; color: #25dbf4;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
+                    <a href="#" class="back-button" style="font-weight: bold; color: #25dbf4;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
                     <h1 class="text-primary ml-3" style="font-weight: bold; font-size: 3.5rem; color: #25dbf4 !important;">Add Vaccine Record</h1>
                 </div>
                 <div class="card p-4 mt-3" style="background-color: #fbfbf9; border-radius: 20px;">
@@ -112,5 +148,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="leavePageModal" tabindex="-1" role="dialog" aria-labelledby="leavePageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="leavePageModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-warning-text">WARNING!</div>
+                    <div class="additional-text mt-2">Your changes have not been saved.<br>Are you sure you want to leave this page?</div>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary">YES</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.back-button').click(function(e) {
+                e.preventDefault();
+                $('#leavePageModal').modal('show');
+            });
+        });
+    </script>
 </body>
 </html>
