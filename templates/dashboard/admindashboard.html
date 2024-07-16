@@ -52,7 +52,7 @@
                         <div class="list-group mt-3">
                             <a href="#" class="list-group-item list-group-item-action" style="background-color: #fff; color: #25dbf4; font-weight: 600;">Vaccine Records</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
-                            <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600;">Verified Application</a>
+                            <a href="{% url 'verified' %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600;">Verified Application</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
                             <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600;">Rejected Application</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
@@ -71,6 +71,7 @@
                                 <th>Date</th>
                                 <th>Name</th>
                                 <th>Vaccine Type</th>
+                                <th>Status</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -79,11 +80,11 @@
                             {% for record in vaccine_records %}
                             <tr>
                                 <td>{{ record.vaccination_date }}</td>
-                                <td>{{ name }}</td>
+                                <td>{{ user.username }}</td>
                                 <td>{{ record.vaccine_type }}</td>
-                                <td>
-                                </td>
-                                <td><a href="#" class="btn btn-primary btn-sm">Accept</a></td>
+                                <td>{{ record.status }}</td>
+                                <td></td>
+                                <td><a href="{% url 'accept_vaccine_record' pk=record.pk %}" class="btn btn-primary btn-sm">Accept</a></td>
                                 <td><a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal" data-record-id="{{ record.pk }}">Reject</a></td>
                             </tr>
                             {% endfor %}
@@ -115,6 +116,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="rejectForm" method="POST" action="">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="rejectionReason">Reason for Rejection</label>
                             <textarea class="form-control" id="rejectionReason" name="rejectionReason" rows="3" required></textarea>
@@ -138,9 +140,8 @@
             var recordId = button.data('record-id');
             var modal = $(this);
             modal.find('#recordId').val(recordId);
-            modal.find('#rejectForm').attr('action', "{% url 'reject_vaccine_record' pk=recordId %}");
+            modal.find('#rejectForm').attr('action', "{% url 'reject_vaccine_record' pk=0 %}".replace('0', recordId));
         });
     </script>
 </body>
-
 </html>
