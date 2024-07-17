@@ -89,7 +89,7 @@
                                     {% endif %}
                                 ">{{ record.status }}</span>
                                 </td>
-                                <td><a href="#" class="btn btn-primary btn-sm">Edit</a></td>
+                                <td><a href="{% url 'edit_record' record.pk %}" class="btn btn-primary btn-sm">Edit</a></td>
                                 <td><a href="{% url 'delete_vaccine_record' pk=record.pk %}" class="btn btn-danger btn-sm">Delete</a></td>
                             </tr>
                             {% endfor %}

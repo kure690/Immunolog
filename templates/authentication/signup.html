@@ -15,6 +15,11 @@
         .form-input {
             width: 100%;
         }
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -32,35 +37,31 @@
     <div class="container my-auto">
         <div class="container d-flex justify-content-center align-items-center min-vh-100">
             <div class="row border rounded-5 p-3 bg-white shadow box-area">
-                <div class="col-md-12 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="
-                padding-top: 24px;">
+                <div class="col-md-12 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="padding-top: 24px;">
                     <form id="signupForm" method="post" action="{% url 'signup' %}" style="width:250px">
                         {% csrf_token %}
                         <div id="page1">
                             <div>
-                                <input type="text" id="username" name="username" class="form-input" placeholder="Username" required>
+                                <input type="text" id="username" name="username" class="form-input" required placeholder="Username">
                             </div>
-                            
                             <div>
-                                <input type="email" id="email" name="email" class="form-input" placeholder="Email (will be used for login)" required>
+                                <input type="email" id="email" name="email" class="form-input" required placeholder="Email (will be used for login)">
                             </div>
-                            
                             <div>
-                                <input type="text" id="fname" name="fname" class="form-input" placeholder="First Name" required>
+                                <input type="text" id="fname" name="fname" class="form-input" required placeholder="First Name">
                             </div>
-                            
                             <div>
-                                <input type="text" id="lname" name="lname" class="form-input" placeholder="Last Name" required>
+                                <input type="text" id="lname" name="lname" class="form-input" required placeholder="Last Name">
                             </div>
-                    
                             <div>
                                 <label for="sex" class="fw-bold">Sex:</label>
-                                <select id="sex" name="sex" class="form-input">
+                                <select id="sex" name="sex" class="form-input" required>
                                     <option value="">Select Sex</option>
                                     <option value="MALE">Male</option>
                                     <option value="FEMALE">Female</option>
                                 </select>
                             </div>
+                            <div class="error-message" id="error-message-page1">Please fill in all the fields.</div>
                             <br>
                             <button type="button" class="signup-button" onclick="nextPage()">Next</button>
                         </div>
@@ -68,20 +69,17 @@
                         <div id="page2" style="display: none;">
                             <button type="button" class="back-button" onclick="previousPage()"><i class="fa-solid fa-arrow-left"></i></button>
                             <div>
-                                <input type="text" id="address" name="address" class="form-input" placeholder="Address:" required>
+                                <input type="text" id="address" name="address" class="form-input" required placeholder="Address">
                             </div>
-                            
                             <div>
-                                <input type="text" id="birthday" name="birthday" class="form-input" placeholder="Birthday:" required>
+                                <input type="text" id="birthday" name="birthday" class="form-input" required placeholder="Birthday">
                             </div>
-                    
                             <div>
-                                <input type="text" id="occupation" name="occupation" class="form-input" placeholder="Occupation:" required>
+                                <input type="text" id="occupation" name="occupation" class="form-input" required placeholder="Occupation">
                             </div>
-                    
                             <div>
                                 <label for="civil_status" class="fw-bold">Civil Status:</label>
-                                <select id="civil_status" name="civil_status" class="form-input">
+                                <select id="civil_status" name="civil_status" class="form-input" required>
                                     <option value="">Select Civil Status</option>
                                     <option value="SINGLE">Single</option>
                                     <option value="MARRIED">Married</option>
@@ -90,13 +88,12 @@
                                 </select>
                             </div>
                             <div>
-                                <input type="password" id="password1" name="password1" class="form-input" placeholder="Password:" required>
+                                <input type="password" id="password1" name="password1" class="form-input" required placeholder="Password">
                             </div>
-                            
                             <div>
-                                <input type="password" id="password2" name="password2" class="form-input" placeholder="Confirm" required>
+                                <input type="password" id="password2" name="password2" class="form-input" required placeholder="Confirm Password">
                             </div>
-                            
+                            <div class="error-message" id="error-message-page2">Please fill in all the fields.</div>
                             <button type="submit" class="signup-button">Sign Up</button>
                         </div>
                     </form>
@@ -124,8 +121,23 @@
         });
 
         function nextPage() {
-            document.getElementById('page1').style.display = 'none';
-            document.getElementById('page2').style.display = 'block';
+            const page1Inputs = document.querySelectorAll('#page1 .form-input');
+            let valid = true;
+            page1Inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    valid = false;
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            if (valid) {
+                document.getElementById('page1').style.display = 'none';
+                document.getElementById('page2').style.display = 'block';
+                document.getElementById('error-message-page1').style.display = 'none';
+            } else {
+                document.getElementById('error-message-page1').style.display = 'block';
+            }
         }
 
         function previousPage() {

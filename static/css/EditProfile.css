@@ -6,7 +6,6 @@ body {
     justify-content: flex-start;
     display: flex;
     flex-direction: row;
-    background-image: url('../images/placeholder.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
