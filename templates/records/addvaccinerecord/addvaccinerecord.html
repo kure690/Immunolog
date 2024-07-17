@@ -3,135 +3,93 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ImmunoLog</title>
+        <title>Add Vaccine Record</title>
         <link rel="stylesheet" href="addvaccinerecord.css" />
     </head>
     <body>
-        <!-- Header Section -->
-        <header class="header">
-            <img src="logo.png" alt="Logo" class="logo" />
-            <div class="brand-name">ImmunoLog</div>
-        </header>
-
-        <!-- Sidebar Section -->
-        <div class="sidebar">
-            <a href="#home">Home</a>
-            <a href="#profile">Profile</a>
-            <a href="#settings">Settings</a>
-            <a href="#logout">Logout</a>
-        </div>
-
-        <!-- Main Content Section -->
-        <div class="content">
-            <div class="profile-card">
-                <h2>User Profile</h2>
-                <p>Name: John Doe</p>
-                <p>Email: john.doe@example.com</p>
+        <section class="profile-container">
+            <div class="avatar-wrapper">
+                <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/ce0826c8ef89f6d573798ecb34a8aafe1840bd3a6dca5a5fd563b21a2d675fb5?apiKey=08d8ca6c836047b986da4ef5cdc4a6c0&"
+                    class="avatar-image"
+                    alt="User avatar"
+                />
             </div>
-            <div class="vaccine-record-container">
-                <div class="header">
-                    <div class="header-title">Vaccine Record</div>
-                    <svg
-                        class="header-icon"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
+            <div class="profile-info">
+                <h1 class="greeting">Hi Roberto!</h1>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#" class="vaccine-records"
+                                >Vaccine Records</a
+                            >
+                        </li>
+                    </ul>
+                </nav>
+                <hr class="divider" />
+                <a href="#" class="profile-action">Edit Profile</a>
+                <hr class="divider" />
+                <a href="#" class="profile-action">Contact us</a>
+                <hr class="bottom-divider" />
+            </div>
+        </section>
+        <div class="content">
+            <div class="form-container">
+                <h1>Add Vaccine Record</h1>
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-field">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="text" id="date" class="form-input" />
+                        </div>
+                        <div class="form-field">
+                            <label for="physician" class="form-label"
+                                >Attending Physician/Nurse</label
+                            >
+                            <input
+                                type="text"
+                                id="physician"
+                                class="form-input"
+                            />
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-field">
+                            <label for="vaccine-type" class="form-label"
+                                >Vaccine Type</label
+                            >
+                            <input
+                                type="text"
+                                id="vaccine-type"
+                                class="form-input"
+                            />
+                        </div>
+                        <div class="form-field">
+                            <label for="vaccine-venue" class="form-label"
+                                >Vaccine Venue</label
+                            >
+                            <input
+                                type="text"
+                                id="vaccine-venue"
+                                class="form-input"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="upload-container">
+                    <label for="upload-file" class="upload-label"
+                        >Upload File Here</label
                     >
-                        <path
-                            d="M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM16.956 7.95899L12.926 13.889C12.602 14.368 11.93 14.368 11.606 13.889L7.576 7.95899C7.258 7.48899 7.568 6.86999 8.066 6.86999H15.466C15.964 6.86999 16.274 7.48899 15.956 7.95899H16.956ZM10.296 14.718C9.728 14.718 9.276 15.17 9.276 15.738C9.276 16.306 9.728 16.758 10.296 16.758C10.864 16.758 11.316 16.306 11.316 15.738C11.316 15.17 10.864 14.718 10.296 14.718ZM13.676 14.718C13.108 14.718 12.656 15.17 12.656 15.738C12.656 16.306 13.108 16.758 13.676 16.758C14.244 16.758 14.696 16.306 14.696 15.738C14.696 15.17 14.244 14.718 13.676 14.718Z"
-                        />
-                    </svg>
+                    <input type="file" id="upload-file" class="upload-input" />
+                    <button class="upload-button">UPLOAD FILE HERE</button>
                 </div>
-                <div class="form-container">
-                    <div class="form-row">
-                        <div class="form-column">
-                            <div class="form-group">
-                                <div class="form-row-inner">
-                                    <div class="form-column-inner">
-                                        <div class="form-field">
-                                            <label class="form-label"
-                                                >Vaccine Name</label
-                                            >
-                                            <input
-                                                type="text"
-                                                class="form-input"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="form-column-inner">
-                                        <div class="form-field">
-                                            <label class="form-label"
-                                                >Date Administered</label
-                                            >
-                                            <input
-                                                type="date"
-                                                class="form-input"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="form-column-inner">
-                                        <div class="form-field">
-                                            <label class="form-label"
-                                                >Dose</label
-                                            >
-                                            <input
-                                                type="text"
-                                                class="form-input"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-field-wide">
-                                    <label class="form-label-wide"
-                                        >Side Effects</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-input-wide"
-                                    />
-                                </div>
-                                <div class="form-field-wide">
-                                    <label class="form-label-wide"
-                                        >Additional Notes</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-input-wide"
-                                    />
-                                </div>
-                                <div class="form-field-wide">
-                                    <label class="form-label-physician"
-                                        >Administered By (Physician)</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-input-physician"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-column">
-                            <div class="upload-container">
-                                <svg
-                                    class="upload-icon"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                >
-                                    <path
-                                        d="M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM12 18C11.4477 18 11 17.5523 11 17V13H7C6.44772 13 6 12.5523 6 12C6 11.4477 6.44772 11 7 11H11V7C11 6.44772 11.4477 6 12 6C12.5523 6 13 6.44772 13 7V11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H13V17C13 17.5523 12.5523 18 12 18Z"
-                                    />
-                                </svg>
-                                <button class="upload-button">
-                                    Upload Document
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-field-wide">
-                        <label class="form-label-venue">Venue</label>
-                        <input type="text" class="form-input-venue" />
-                    </div>
-                    <button class="save-button">Save</button>
+                <div class="save-container">
+                    <button class="save-button">SAVE</button>
                 </div>
+            </div>
+            <div class="pagination">
+                <span class="page-number">Page 02 of 03</span>
             </div>
         </div>
     </body>
