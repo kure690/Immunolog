@@ -12,6 +12,11 @@ from django.urls import reverse_lazy
 from django.http import Http404
 from django.contrib.auth import get_user_model
 from records.models import VaccineRecord
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth import password_validation
+from django.core.exceptions import ValidationError
 
 # Create your views here.
 
@@ -101,7 +106,6 @@ def signin(request):
 
 def signout(request):
     logout(request)
-    messages.success(request, "Logged Out Successfully!")
     return redirect('signin')
 
 @login_required
@@ -118,10 +122,94 @@ def dashboard(request):
         return render(request, 'dashboard/customerdashboard.html', context)
 
 
+# class InfoUpdate(LoginRequiredMixin, UpdateView):
+#     model = CustomUser
+#     fields = ['first_name', 'last_name', 'email', 'sex', 'address', 'birthday', 'occupation', 'civil_status', 'profile_picture']
+#     template_name = 'authentication/editprofile.html'
+
+#     def get_success_url(self):
+#         return reverse_lazy('editprofile', kwargs={'pk': self.object.pk})
+
+#     def get_object(self, queryset=None):
+#         obj = super().get_object(queryset)
+#         if obj != self.request.user:
+#             raise Http404("You are not allowed to access this page.")
+#         return obj
+
+#     def form_valid(self, form):
+#         if 'clear_profile_picture' in self.request.POST:
+#             form.instance.profile_picture.delete()
+#         response = super().form_valid(form)
+#         if 'profile_picture' in self.request.FILES:
+#             form.instance.profile_picture = self.request.FILES['profile_picture']
+#             form.instance.save()
+#         return response
+
+
 class InfoUpdate(LoginRequiredMixin, UpdateView):
     model = CustomUser
     fields = ['first_name', 'last_name', 'email', 'sex', 'address', 'birthday', 'occupation', 'civil_status', 'profile_picture']
     template_name = 'authentication/editprofile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['password_form'] = PasswordChangeForm(self.request.user)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        password_form = PasswordChangeForm(request.user, request.POST)
+
+        if 'change_password' in request.POST:
+            if password_form.is_valid():
+                old_password = password_form.cleaned_data.get('old_password')
+                new_password = password_form.cleaned_data.get('new_password1')
+                
+                try:
+                    self.validate_new_password(request.user, old_password, new_password)
+                    user = password_form.save()
+                    update_session_auth_hash(request, user)
+                    messages.success(request, 'Your password was successfully updated!', extra_tags='password')
+                    return redirect(self.get_success_url())
+                except ValidationError as error:
+                    messages.error(request, error.message, extra_tags='password')
+            else:
+                for error in password_form.errors.values():
+                    messages.error(request, error, extra_tags='password')
+            return self.render_to_response(self.get_context_data(form=form, password_form=password_form))
+        else:
+            if form.is_valid():
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+
+    def validate_new_password(self, user, old_password, new_password):
+        if not user.check_password(old_password):
+            raise ValidationError("Your current password was entered incorrectly. Please enter it again.")
+        
+        if old_password == new_password:
+            raise ValidationError("Your new password can't be the same as your current password.")
+        
+        # Use Django's password validators
+        try:
+            password_validation.validate_password(new_password, user)
+        except ValidationError as error:
+            raise ValidationError(error.messages[0])
+
+    def form_valid(self, form):
+        if 'clear_profile_picture' in self.request.POST:
+            form.instance.profile_picture.delete()
+        response = super().form_valid(form)
+        if 'profile_picture' in self.request.FILES:
+            form.instance.profile_picture = self.request.FILES['profile_picture']
+            form.instance.save()
+        messages.success(self.request, 'Your profile was successfully updated!', extra_tags='profile')
+        return response
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'There was an error updating your profile. Please check the form and try again.', extra_tags='profile')
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy('editprofile', kwargs={'pk': self.object.pk})
@@ -131,12 +219,3 @@ class InfoUpdate(LoginRequiredMixin, UpdateView):
         if obj != self.request.user:
             raise Http404("You are not allowed to access this page.")
         return obj
-
-    def form_valid(self, form):
-        if 'clear_profile_picture' in self.request.POST:
-            form.instance.profile_picture.delete()
-        response = super().form_valid(form)
-        if 'profile_picture' in self.request.FILES:
-            form.instance.profile_picture = self.request.FILES['profile_picture']
-            form.instance.save()
-        return response

@@ -80,7 +80,7 @@
                             {% for record in vaccine_records %}
                             <tr>
                                 <td>{{ record.vaccination_date }}</td>
-                                <td>{{ user.username }}</td>
+                                <td>{{ record.user.get_full_name|default:record.user.username|title }}</td>
                                 <td>{{ record.vaccine_type }}</td>
                                 <td>{{ record.status }}</td>
                                 <td></td>
