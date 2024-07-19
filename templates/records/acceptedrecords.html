@@ -3,47 +3,138 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h2>Vaccine Records</h2>
-        <a href="{% url 'dashboard' %}">Back to Dashboard</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Vaccination Date</th>
-                <th></th>
-                <th>Name</th>
-                <th></th>
-                <th>Vaccine Type</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in vaccine_records %}
-            <tr>
-                <td>{{ record.vaccination_date }}</td>
-                <td></td>
-                <td>{{ record.user.username }}</td>
-                <td></td>
-                <td>{{ record.vaccine_type }}</td>
-                <td></td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">No vaccine records found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-        <script src="" async defer></script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verified Application</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .modal-dialog-centered {
+            display: flex;
+            align-items: center;
+            min-height: calc(100% - 1rem);
+        }
+        .modal-dialog-centered::before {
+            content: "";
+            display: block;
+            height: calc(100vh - 100%);
+        }
+        .modal-content {
+            margin: auto;
+        }
+        .modal-footer {
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- navbar -->
+    <div class="container">
+        <header class="d-flex align-items-center p-3 my-3 border-bottom shadow-sm" style="background-color: #fff; box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);">
+            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb1a267a0ff2046f10cc727a2a43cdf487b26cda28ab4734fede8673a65c06a2?apiKey=08d8ca6c836047b986da4ef5cdc4a6c0&" class="img-fluid" style="width: 162px; object-fit: auto;" alt="ImmunoLog logo">
+            <h1 class="ml-3" style="color: #20b2c6; font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif;">ImmunoLog</h1>
+            <div class="ml-auto">
+                Hi {{ user.username }}
+                <a href="{% url 'signout' %}" class="btn btn-link">Sign Out</a>
+            </div>
+        </header>
+
+        <!-- user profile and table -->
+        <div class="row mt-4">
+            <!-- Sidebar -->
+            <aside class="col-md-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div style="background-color: #25dbf4; border-radius: 50%; width: 203px; height: 203px; margin: 0 auto;">
+                            <img loading="lazy" src="path_to_image.jpg" class="img-fluid rounded-circle" style="width: 100%;" alt="profile picture">
+                        </div>
+                        <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif;">Hi {{ user.username }}!</h2>
+                        <div class="list-group mt-3">
+                            <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action" style="font-weight: 600;">Vaccine Records</a>
+                            <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
+                            <a href="{% url 'verified' %}" class="list-group-item list-group-item-action text-center" style="background-color: #fff; color: #25dbf4; font-weight: 600;">Verified Application</a>
+                            <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
+                            <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600;">Rejected Application</a>
+                            <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9">
+                {% if vaccine_records %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Vaccine Type</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in vaccine_records %}
+                            <tr>
+                                <td>{{ record.vaccination_date }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ record.vaccine_type }}</td>
+                                <td></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <p>No vaccine records.</p>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectModalLabel">Reject Vaccine Record</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="rejectForm" method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="rejectionReason">Reason for Rejection</label>
+                            <textarea class="form-control" id="rejectionReason" name="rejectionReason" rows="3" required></textarea>
+                        </div>
+                        <input type="hidden" id="recordId" name="recordId" value="">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $('#rejectModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recordId = button.data('record-id');
+            var modal = $(this);
+            modal.find('#recordId').val(recordId);
+            modal.find('#rejectForm').attr('action', "{% url 'reject_vaccine_record' pk=0 %}".replace('0', recordId));
+        });
+    </script>
+</body>
 </html>

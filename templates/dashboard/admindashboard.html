@@ -50,7 +50,7 @@
                         </div>
                         <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif;">Hi {{ user.username }}!</h2>
                         <div class="list-group mt-3">
-                            <a href="#" class="list-group-item list-group-item-action" style="background-color: #fff; color: #25dbf4; font-weight: 600;">Vaccine Records</a>
+                            <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action" style="background-color: #fff; color: #25dbf4; font-weight: 600;">Vaccine Records</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
                             <a href="{% url 'verified' %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600;">Verified Application</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
@@ -94,12 +94,6 @@
                 {% else %}
                     <p>No vaccine records.</p>
                 {% endif %}
-                
-                <div class="d-flex justify-content-end">
-                    <div class="pagination">
-                        <a href="#">Page 01 of 03</a>
-                    </div>
-                </div>
             </main>
         </div>
     </div>
