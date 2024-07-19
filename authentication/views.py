@@ -17,6 +17,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 # Create your views here.
 
@@ -111,11 +112,18 @@ def signout(request):
 @login_required
 def dashboard(request):
     user = request.user
+    
+    if user.is_superuser:
+        vaccine_records = VaccineRecord.objects.filter(Q(status='under_review') | Q(status='Under Review'))
+    else:
+        vaccine_records = VaccineRecord.objects.filter(user=user)
+    
     context = {
         'user': user,
         'pk': user.pk,
-        'vaccine_records': VaccineRecord.objects.all() if user.is_superuser else VaccineRecord.objects.filter(user=user)
+        'vaccine_records': vaccine_records,
     }
+
     if user.is_superuser:
         return render(request, 'dashboard/admindashboard.html', context)
     else:

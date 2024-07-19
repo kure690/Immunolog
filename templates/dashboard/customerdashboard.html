@@ -71,6 +71,7 @@
                                 <th>Status</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,9 +90,61 @@
                                     {% endif %}
                                 ">{{ record.status }}</span>
                                 </td>
+                                <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal{{ record.pk }}">View</button></td>
                                 <td><a href="#" class="btn btn-primary btn-sm">Edit</a></td>
                                 <td><a href="{% url 'delete_vaccine_record' pk=record.pk %}" class="btn btn-danger btn-sm">Delete</a></td>
                             </tr>
+            
+                            <!-- Modal for each record -->
+                            <div class="modal fade" id="viewModal{{ record.pk }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel{{ record.pk }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="viewModalLabel{{ record.pk }}">Record Details</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>Date:</strong> {{ record.vaccination_date }}</p>
+                                            <p><strong>Vaccine Type:</strong> {{ record.vaccine_type }}</p>
+                                            <p><strong>Status:</strong> 
+                                                <span class="badge 
+                                                {% if record.status == 'VERIFIED' %}
+                                                    badge-success
+                                                {% elif record.status == 'UNDER REVIEW' %}
+                                                    badge-warning
+                                                {% elif record.status == 'REJECTED' %}
+                                                    badge-danger
+                                                {% endif %}
+                                                ">{{ record.status }}</span>
+                                            </p>
+                                            {% if record.status == 'Verified' %}
+                                                <div class="alert alert-success" role="alert">
+                                                    Your record has been verified. Thank you for submitting your vaccination information.
+                                                </div>
+                                            {% elif record.status == 'Under Review' %}
+                                                <div class="alert alert-warning" role="alert">
+                                                    Your record is currently under review. Please check back later for updates.
+                                                </div>
+                                            {% elif record.status == 'Rejected' %}
+                                                <div class="alert alert-danger" role="alert">
+                                                    <h6 class="alert-heading">Your record has been rejected.</h6>
+                                                    {% if record.rejection_reason %}
+                                                        <hr>
+                                                        <p class="mb-0"><strong>Reason for Rejection:</strong> {{ record.rejection_reason }}</p>
+                                                    {% else %}
+                                                        <p class="mb-0">No specific reason was provided for the rejection.</p>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {% endfor %}
                         </tbody>
                     </table>

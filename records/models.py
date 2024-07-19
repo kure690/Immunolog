@@ -6,12 +6,12 @@ from django.conf import settings
 class VaccineRecord(models.Model):
     STATUS_CHOICES = [
         ('verified', 'Verified'),
-        ('under_review', 'Under Review'),
+        ('under review', 'Under Review'),
         ('rejected', 'Rejected'),
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='under_review')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Under Review')
     vaccination_date = models.DateField()
     submission_date = models.DateTimeField(auto_now_add=True)
     vaccine_type = models.CharField(max_length=100)
@@ -19,6 +19,7 @@ class VaccineRecord(models.Model):
     attending_physician_first_name = models.CharField(max_length=100, default='John')
     attending_physician_last_name = models.CharField(max_length=100, default='Doe')
     vaccine_venue = models.CharField(max_length=100, default='Johnson & Johnson')
+    rejection_reason = models.TextField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.user.username} - {self.vaccine_type} on {self.vaccination_date}"

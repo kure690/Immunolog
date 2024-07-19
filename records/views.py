@@ -68,9 +68,16 @@ class UserVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 @login_required
 def reject_vaccine_record(request, pk):
-    record = get_object_or_404(VaccineRecord, pk=pk)
-    record.status = 'Rejected'
-    record.save()
+    if request.method == 'POST':
+        record = get_object_or_404(VaccineRecord, pk=pk)
+        rejection_reason = request.POST.get('rejection_reason')
+        
+        record.status = 'Rejected'
+        record.rejection_reason = rejection_reason
+        record.save()
+        
+        return redirect('dashboard')
+    
     return redirect('dashboard')
 
 
