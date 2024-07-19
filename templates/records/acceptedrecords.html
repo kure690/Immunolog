@@ -57,7 +57,7 @@
                             <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
                             <a href="{% url 'verified' %}" class="list-group-item list-group-item-action text-center" style="background-color: #fff; color: #25dbf4; font-weight: 600;">Verified Application</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px;"></div>
-                            <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600;">Rejected Application</a>
+                            <a href="{% url 'rejected' %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600;">Rejected Application</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                             {% for record in vaccine_records %}
                             <tr>
                                 <td>{{ record.vaccination_date }}</td>
-                                <td>{{ user.username }}</td>
+                                <td>{{ record.user.get_full_name|default:record.user.username|title }}</td>
                                 <td>{{ record.vaccine_type }}</td>
                                 <td></td>
                             </tr>

@@ -98,7 +98,7 @@ class AcceptedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
 class RejectedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = VaccineRecord
     context_object_name = 'vaccine_records'
-    template_name = 'records/acceptedrecords.html'
+    template_name = 'records/rejectedrecords.html'
 
     def get_queryset(self):
         return VaccineRecord.objects.filter(status='Rejected')
