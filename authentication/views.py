@@ -26,10 +26,15 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     return render(request, "authentication/index.html")
 
 @require_http_methods(["GET", "POST"])
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    
     if request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -80,6 +85,9 @@ def signup(request):
 
 
 def signin(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    
     if request.method == "POST":
         username_or_email = request.POST.get('username_or_email')
         password = request.POST.get('password')

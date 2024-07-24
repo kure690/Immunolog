@@ -6,6 +6,9 @@
     <title>User Dashboard</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     {% load static %}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
     body {
             background-image: url("{% static 'images/background.jpg' %}");
@@ -32,6 +35,27 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
 }
+#currentImage {
+            max-width: 100%;
+            max-height: 200px;
+        }
+        .image-container {
+            width: 350px;
+            height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .fit-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
 </style>
     
 </head>
@@ -120,7 +144,14 @@
                                 ">{{ record.status }}</span>
                                 </td>
                                 <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal{{ record.pk }}">View</button></td>
-                                <td><a href="#" class="btn btn-primary btn-sm">Edit</a></td>
+                                <td>
+                                    <button type="button" 
+                                            class="btn btn-primary btn-sm edit-record" 
+                                            data-url="{% url 'edit_vaccine_record' record.pk %}"
+                                            data-status="{{ record.status }}">
+                                        Edit
+                                    </button>
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ record.pk }}">
                                         Delete
@@ -141,6 +172,11 @@
                                         <div class="modal-body">
                                             <p><strong>Date:</strong> {{ record.vaccination_date }}</p>
                                             <p><strong>Vaccine Type:</strong> {{ record.vaccine_type }}</p>
+                                            <div class="form-group" style="display: flex; justify-content: center; margin-top: 10px;">
+                                                <div class="image-container">
+                                                    <img id="viewImage{{ record.pk }}" src="{{ record.proof_document.url }}" alt="Current proof document" class="fit-image">
+                                                </div>
+                                            </div>
                                             <p><strong>Status:</strong> 
                                                 <span class="badge 
                                                 {% if record.status == 'VERIFIED' %}
@@ -178,6 +214,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- delete modal -->
                             <div class="modal fade" id="deleteModal{{ record.pk }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ record.pk }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -197,6 +234,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             {% endfor %}
                         </tbody>
                     </table>
@@ -211,11 +249,146 @@
                     </div>
                 </div>
             </main>
+
+            
+        </div>
+    </div>
+
+    <!-- edit modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Vaccine Record</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" id="recordId" name="recordId">
+                        <div class="form-group">
+                            <label for="vaccination_date">Vaccination Date</label>
+                            <input type="date" class="form-control" id="vaccination_date" name="vaccination_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vaccine_type">Vaccine Type</label>
+                            <input type="text" class="form-control" id="vaccine_type" name="vaccine_type" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attending_physician_first_name">Physician's First Name</label>
+                            <input type="text" class="form-control" id="attending_physician_first_name" name="attending_physician_first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attending_physician_last_name">Physician's Last Name</label>
+                            <input type="text" class="form-control" id="attending_physician_last_name" name="attending_physician_last_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vaccine_venue">Vaccine Venue</label>
+                            <input type="text" class="form-control" id="vaccine_venue" name="vaccine_venue" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="proof_document">Update Image</label>
+                            <input type="file" class="form-control-file" id="proof_document" name="proof_document" accept="image/*">
+                        </div>
+                        <div class="form-group" style="display: flex; justify-content: center; margin-top: 10px;">
+                            <div class="image-container">
+                                <img id="currentImage" src="" alt="Current proof document">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- error message -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Editing is no longer allowed for this record.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
     
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.edit-record').click(function() {
+                var url = $(this).data('url');
+                var status = $(this).data('status');
+                
+                if (status.toLowerCase() !== 'under review') {
+                    $('#errorModal').modal('show');
+                    return;
+                }
+                
+                $.get(url, function(data) {
+                    $('#recordId').val(data.id);
+                    $('#vaccination_date').val(data.vaccination_date);
+                    $('#vaccine_type').val(data.vaccine_type);
+                    $('#attending_physician_first_name').val(data.attending_physician_first_name);
+                    $('#attending_physician_last_name').val(data.attending_physician_last_name);
+                    $('#vaccine_venue').val(data.vaccine_venue);
+                    
+                    // Update this part to handle the image
+                    if (data.proof_document) {
+                        $('#currentImage').attr('src', data.proof_document).show();
+                    } else {
+                        $('#currentImage').attr('src', '').hide();
+                    }
+                    
+                    $('#editModal').modal('show');
+                });
+            });
+        
+            $('#proof_document').change(function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#currentImage').attr('src', e.target.result).show();
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        
+            $('#saveChanges').click(function() {
+                var formData = new FormData($('#editForm')[0]);
+                $.ajax({
+                    url: "{% url 'edit_vaccine_record' 0 %}".replace('0', $('#recordId').val()),
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            location.reload();
+                        } else {
+                            alert('Error updating record');
+                        }
+                    }
+                });
+            });
+        });
+        </script>
 </body>
 </html>
