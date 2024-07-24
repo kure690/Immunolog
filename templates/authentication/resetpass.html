@@ -2,46 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-    <!-- Add your CSS links or styles here -->
+    <title>Immunolog - Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        /* Add your custom CSS styles here */
+        /* Custom modal width and centering */
+        .modal-dialog {
+            max-width: 80%;
+            margin: auto;
+        }
+        .modal-content {
+            width: 100%;
+        }
     </style>
 </head>
-<body>
-      <div> 
-     
-    
-    
-    <div class="container">
-        <h2 style="
-            font-family: 'Jua', sans-serif;
-          "
-          > Reset password </h2>
-          <p>Enter your email address below, and we'll send you instructions to reset your password.</p>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_email">Email:</label>
-                <input type="email" name="email" id="id_email" class="form-control" requiredplaceholder="Enter your email" required style="width: 50%;
-                padding: 9px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                margin-bottom: 8px;
-                box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-                ">
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <div class="head-section">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <div class="featured-image">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="container my-auto">
+        <div class="container d-flex justify-content-center align-items-center min-vh-100">
+            <div class="row border rounded-5 p-3 bg-white shadow box-area">
+                <div class="col-md-12 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="padding-top: 24px;">
+                    <p>Enter your email address below, and we'll send you instructions to reset your password.</p>
+                    <form method="post" id="reset-password-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="email" name="email" id="id_email" class="form-control" required placeholder="Enter your email" required 
+                            style="width: 200%;
+                            padding: 9px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            margin-bottom: 8px;
+                            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);">
+                        </div>
+                        <br>
+                        <button type="submit">Reset Password</button>
+                    </form>
+                </div>
             </div>
-            <br>
-            <button>
-              Reset Password
-          </button>
-        </form>
+        </div>
     </div>
+    
+    {% comment %} Modal {% endcomment %}
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetPasswordModalLabel">PASSWORD RESET SENT</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>We have sent you instructions via email on how to set your password. If there is an account associated with the email you provided, you should expect to receive these instructions shortly.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/'">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('#reset-password-form').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "reset_password" %}', 
+                    data: {
+                        email: $('#id_email').val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function(response) {
+                        $('#resetPasswordModal').modal('show');
+                    },
+                    error: function(response) {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
