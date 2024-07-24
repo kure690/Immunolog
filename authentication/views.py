@@ -18,6 +18,8 @@ from django.contrib import messages
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -26,55 +28,54 @@ from django.contrib.auth import authenticate, login
 def home(request):
     return render(request, "authentication/index.html")
 
+@require_http_methods(["GET", "POST"])
 def signup(request):
     if request.method == "POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        sex = request.POST['sex']
-        birthday_str = request.POST['birthday']
-        address = request.POST['address']
-        occupation = request.POST['occupation']
-        civil_status = request.POST['civil_status']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        sex = request.POST.get('sex')
+        birthday_str = request.POST.get('birthday')
+        address = request.POST.get('address')
+        occupation = request.POST.get('occupation')
+        civil_status = request.POST.get('civil_status')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
 
         if password1 != password2:
-            messages.error(request, "Passwords do not match")
-            return render(request, "authentication/signup.html")
+            return JsonResponse({'success': False, 'error': "Passwords do not match"})
 
         if CustomUser.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists")
-            return render(request, "authentication/signup.html")
+            return JsonResponse({'success': False, 'error': "Username already exists"})
 
         if CustomUser.objects.filter(email=email).exists():
-            messages.error(request, "Email already exists")
-            return render(request, "authentication/signup.html")
+            return JsonResponse({'success': False, 'error': "Email already exists"})
 
         try:
             birthday_date = datetime.strptime(birthday_str, "%m/%d/%Y").date()
         except ValueError:
-            messages.error(request, "Invalid date format. Please select a date.")
-            return render(request, "authentication/signup.html")
+            return JsonResponse({'success': False, 'error': "Invalid date format. Please select a date."})
 
-        user = CustomUser.objects.create_user(
-            username=username,
-            email=email,
-            first_name=fname,
-            last_name=lname,
-            password=password1,
-            birthday=birthday_date,
-            sex = sex,
-            address = address,
-            occupation = occupation,
-            civil_status = civil_status
-        )
+        try:
+            user = CustomUser.objects.create_user(
+                username=username,
+                email=email,
+                first_name=fname,
+                last_name=lname,
+                password=password1,
+                birthday=birthday_date,
+                sex=sex,
+                address=address,
+                occupation=occupation,
+                civil_status=civil_status
+            )
+            login(request, user)
+            return JsonResponse({'success': True, 'message': "Sign up successful!"})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
 
-        user.save()
-        login(request, user)
-        return redirect('signin')
-
+    # If it's a GET request, just render the signup page
     return render(request, "authentication/signup.html")
 
 
@@ -117,6 +118,9 @@ def dashboard(request):
         vaccine_records = VaccineRecord.objects.filter(Q(status='under_review') | Q(status='Under Review'))
     else:
         vaccine_records = VaccineRecord.objects.filter(user=user)
+
+    for record in vaccine_records:
+        print(f"Record ID: {record.pk}")
     
     context = {
         'user': user,
@@ -227,3 +231,9 @@ class InfoUpdate(LoginRequiredMixin, UpdateView):
         if obj != self.request.user:
             raise Http404("You are not allowed to access this page.")
         return obj
+    
+
+def contactus(request):
+    user = request.user
+    context = {'pk': user.pk}
+    return render(request, "extras/contactus.html", context)

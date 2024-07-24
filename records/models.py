@@ -4,6 +4,7 @@ from django.conf import settings
 
 
 class VaccineRecord(models.Model):
+    id = models.AutoField(primary_key=True)
     STATUS_CHOICES = [
         ('verified', 'Verified'),
         ('under review', 'Under Review'),

@@ -17,5 +17,6 @@ urlpatterns = [
    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='authentication/resetconfirmation.html'), name = "password_reset_confirm"),
    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='authentication/resetcomplete.html'), name = "password_reset_complete"),
    path('editprofile/<int:pk>/', InfoUpdate.as_view(), name='editprofile'),
+   path('contactus', views.contactus, name='contactus'),
  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -113,4 +113,5 @@ class RejectedVaccineRecord(LoginRequiredMixin, UserPassesTestMixin, ListView):
 def delete_vaccine_record(request, pk):
     record = get_object_or_404(VaccineRecord, pk=pk)
     record.delete()
-    return redirect('dashboard')   
+    return redirect('dashboard')
+
