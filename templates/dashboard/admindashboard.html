@@ -90,6 +90,25 @@
         .card-body {
             text-align: center;
         }
+        .image-container {
+            width: 350px;
+            height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            object-fit: cover;
+            object-position: center;
+        }
+        .fit-image {
+            max-width: 350px;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
         
         
     </style>
@@ -154,6 +173,8 @@
                             <th>Status</th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -164,9 +185,13 @@
                             <td>{{ record.vaccine_type }}</td>
                             <td>{{ record.status }}</td>
                             <td></td>
-                            <td><a href="{% url 'accept_vaccine_record' pk=record.pk %}" class="btn btn-primary btn-sm">Accept</a></td>
                             <td>
-                                <!-- Replace the existing reject button with this form -->
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal{{ record.pk }}">
+                                    View
+                                </button>
+                            </td>
+                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#acceptModal{{ record.pk }}">Accept</button></td>
+                            <td>
                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal{{ record.pk }}">
                                     Reject
                                 </button>
@@ -207,6 +232,69 @@
             
         </main>
     </div>
+    <!-- accept modal -->
+    {% for record in vaccine_records %}
+    <div class="modal fade" id="acceptModal{{ record.pk }}" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel{{ record.pk }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="acceptModalLabel{{ record.pk }}">Confirm Acceptance</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to accept this vaccine record?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'accept_vaccine_record' pk=record.pk %}" class="btn btn-primary">Confirm</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- view modal -->
+    {% for record in vaccine_records %}
+<div class="modal fade" id="viewModal{{ record.pk }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel{{ record.pk }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel{{ record.pk }}">Vaccine Record Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>User:</strong> {{ record.user.get_full_name|default:record.user.username|title }}</p>
+                        <p><strong>Vaccination Date:</strong> {{ record.vaccination_date }}</p>
+                        <p><strong>Vaccine Type:</strong> {{ record.vaccine_type }}</p>
+                        <p><strong>Status:</strong> {{ record.status }}</p>
+                        <p><strong>Vaccine Venue:</strong> {{ record.vaccine_venue }}</p>
+                        <!-- Add any other fields you want to display -->
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Vaccine Record Image:</h6>
+                        {% if record.proof_document.url %}
+                            <div class="image-container">
+                                <img id="viewImage{{ record.pk }}" src="{{ record.proof_document.url }}" alt="Current proof document" class="fit-image">
+                            </div>
+                        {% else %}
+                            <p>No image available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
 
     <!-- Reject Modal -->
     <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">

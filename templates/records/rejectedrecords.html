@@ -96,6 +96,25 @@
         .navbar {
             background-color: rgba(199, 197, 197, 0.7) !important;
         }
+        .image-container {
+            width: 350px;
+            height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            object-fit: cover;
+            object-position: center;
+        }
+        .fit-image {
+            max-width: 350px;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
         
     </style>
 </head>
@@ -165,7 +184,11 @@
                             <td>{{ record.vaccination_date }}</td>
                             <td>{{ record.user.get_full_name|default:record.user.username|title }}</td>
                             <td>{{ record.vaccine_type }}</td>
-                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewModal{{ record.pk }}">
+                                    View
+                                </button>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -178,5 +201,83 @@
             
         </main>
     </div>
+    {% for record in vaccine_records %}
+    <div class="modal fade" id="viewModal{{ record.pk }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel{{ record.pk }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewModalLabel{{ record.pk }}">Vaccine Record Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>User:</strong> {{ record.user.get_full_name|default:record.user.username|title }}</p>
+                            <p><strong>Vaccination Date:</strong> {{ record.vaccination_date }}</p>
+                            <p><strong>Vaccine Type:</strong> {{ record.vaccine_type }}</p>
+                            <p><strong>Status:</strong> {{ record.status }}</p>
+                            <p><strong>Vaccine Venue:</strong> {{ record.vaccine_venue }}</p>
+                            <!-- Add any other fields you want to display -->
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Vaccine Record Image:</h6>
+                            {% if record.proof_document.url %}
+                                <div class="image-container">
+                                    <img id="viewImage{{ record.pk }}" src="{{ record.proof_document.url }}" alt="Current proof document" class="fit-image">
+                                </div>
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+     <!-- Reject Modal -->
+     <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectModalLabel">Reject Vaccine Record</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="rejectForm" method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="rejectionReason">Reason for Rejection</label>
+                            <textarea class="form-control" id="rejectionReason" name="rejectionReason" rows="3" required></textarea>
+                        </div>
+                        <input type="hidden" id="recordId" name="recordId" value="">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $('#rejectModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recordId = button.data('record-id');
+            var modal = $(this);
+            modal.find('#recordId').val(recordId);
+            modal.find('#rejectForm').attr('action', "{% url 'reject_vaccine_record' pk=0 %}".replace('0', recordId));
+        });
+    </script>
 </body>
 </html>
