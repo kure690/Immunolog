@@ -10,5 +10,5 @@ urlpatterns = [
    path('verified', AcceptedVaccineRecord.as_view(), name='verified'),
    path('rejected', RejectedVaccineRecord.as_view(), name='rejected'),
    path('delete_vaccine_record/<int:pk>/', delete_vaccine_record, name='delete_vaccine_record'),
-
+   
 ]

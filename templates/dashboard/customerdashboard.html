@@ -48,7 +48,7 @@
                             <br>
                             <a href="{% url 'editprofile' pk=pk %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Edit Profile</a>
                             <br>
-                            <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
+                            <a href="" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
                             <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                                     {% endif %}
                                 ">{{ record.status }}</span>
                                 </td>
-                                <td><a href="{% url 'edit_record' record.pk %}" class="btn btn-primary btn-sm">Edit</a></td>
+                                <td><a href="" class="btn btn-primary btn-sm">Edit</a></td>
                                 <td><a href="{% url 'delete_vaccine_record' pk=record.pk %}" class="btn btn-danger btn-sm">Delete</a></td>
                             </tr>
                             {% endfor %}
