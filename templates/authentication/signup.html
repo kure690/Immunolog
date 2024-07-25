@@ -28,12 +28,15 @@
         <div class="head-section">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-              <div class="featured-image">
-                <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
-              </div>
+                <div class="featured-image">
+                    <a href="{% url 'home' %}">
+                    <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
+                    </a>
+                  </div>
           </nav>
           </div>
     </header>
+    <div id="message-container" class="alert" style="display: none;"></div>
     <div class="container my-auto">
         <div class="container d-flex justify-content-center align-items-center min-vh-100">
             <div class="row border rounded-5 p-3 bg-white shadow box-area">
@@ -102,48 +105,81 @@
             </div>
         </div>
     </div>
-    {% if messages %}
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("#birthday", {
-            dateFormat: "m/d/Y",
-            maxDate: "today",
-            altInput: true,
-            altFormat: "F j, Y",
-            disableMobile: true
-        });
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#birthday", {
+        dateFormat: "m/d/Y",
+        maxDate: "today",
+        altInput: true,
+        altFormat: "F j, Y",
+        disableMobile: true
+    });
 
-        function nextPage() {
-            const page1Inputs = document.querySelectorAll('#page1 .form-input');
-            let valid = true;
-            page1Inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    valid = false;
-                    input.classList.add('is-invalid');
-                } else {
-                    input.classList.remove('is-invalid');
-                }
-            });
-            if (valid) {
-                document.getElementById('page1').style.display = 'none';
-                document.getElementById('page2').style.display = 'block';
-                document.getElementById('error-message-page1').style.display = 'none';
+    function nextPage() {
+        // Get all required input fields on the first page
+        var requiredFields = ['username', 'email', 'fname', 'lname', 'sex'];
+        var allFilled = true;
+
+        // Check if all required fields are filled
+        for (var i = 0; i < requiredFields.length; i++) {
+            var field = document.getElementById(requiredFields[i]);
+            if (field.value.trim() === '') {
+                allFilled = false;
+                field.style.borderColor = 'red';  // Highlight empty fields
             } else {
-                document.getElementById('error-message-page1').style.display = 'block';
+                field.style.borderColor = '';  // Reset border color for filled fields
             }
         }
 
-        function previousPage() {
-            document.getElementById('page1').style.display = 'block';
-            document.getElementById('page2').style.display = 'none';
+        // If all fields are filled, proceed to next page
+        if (allFilled) {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'block';
+        } else {
+            alert('Please fill in all required fields before proceeding.');
         }
-    </script>
+    }
+
+    function previousPage() {
+        document.getElementById('page1').style.display = 'block';
+        document.getElementById('page2').style.display = 'none';
+    }
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var formData = new FormData(this);
+        
+        fetch("{% url 'signup' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            var messageContainer = document.getElementById('message-container');
+            if (data.success) {
+                messageContainer.className = 'alert alert-success';
+                messageContainer.textContent = 'Sign up successful! Redirecting to login page...';
+                setTimeout(() => {
+                    window.location.href = "{% url 'signin' %}";
+                }, 3000);
+            } else {
+                messageContainer.className = 'alert alert-danger';
+                messageContainer.textContent = data.error || 'An error occurred during sign up. Please try again.';
+            }
+            messageContainer.style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            var messageContainer = document.getElementById('message-container');
+            messageContainer.className = 'alert alert-danger';
+            messageContainer.textContent = 'An error occurred during sign up. Please try again.';
+            messageContainer.style.display = 'block';
+        });
+    });
+</script>
 </body>
 </html>

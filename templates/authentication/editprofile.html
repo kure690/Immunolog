@@ -8,133 +8,232 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/EditProfile.css' %}">
+    <style>
+        body {
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: -1; 
+        }
+    </style>
+    <div class="background-overlay"></div>
 </head>
-<body>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
+        </a>
+        <div class="ml-auto">
+            Hi {{ user.username }}
+            <a href="{% url 'signout' %}" class="btn btn-link">Sign Out</a>
+        </div>
+    </div>
+</nav>
+
+
     
         <!-- //sidebar// -->
-    <aside class="col-md-3">
-        <div class="card mb-3" style="border: none; border-radius: 50%; background-color: #25dbf4; width: 250px; height: 250px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
-            <div style="background-color: #ffffff; border-radius: 50%; width: 203px; height: 203px; display: flex; align-items: center; justify-content: center;">
-                {% if user.profile_picture %}
-                    <img loading="lazy" src="{{ user.profile_picture.url }}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-                {% else %}
-                    <img loading="lazy" src="{% static 'imgs/profilepicdefault.jpg' %}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-                {% endif %}
-                
-                
-                
-            </div>
-        </div>
-        <div class="card mt-n4" style="background-color: #25dbf4; border-radius: 20px; border: none;">
-            <div class="card-body text-center">
-                <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif; color: #fff;">Hi {{ user.username }}!</h2>
-                <div class="list-group mt-3">
-                    <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action" style="font-weight: 600; border-radius: 20px;" >Vaccine Records</a>
-                    <br>
-                    <a href="" class="list-group-item list-group-item-action text-center" style="background-color: #fff; color: #25dbf4; font-weight: 600; border-radius: 20px;">Edit Profile</a>
-                    <br>
-                    <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
-                    <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
-                </div>
-            </div>
-        </div>
-    </aside>
+         <div class="container mt-4">
+            <div class="row">
 
-    <!-- //main content// -->
-    <div class="container">
-        <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: row;">
-            <div class="line">
-                <div class="profile-picture-container">
-                    <div class="profile-picture">
-                        {% if form.instance.profile_picture %}
-                            <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture">
+            
+            <aside class="col-md-3">
+                <div class="card mb-3" style="border: none; border-radius: 50%; background-color: #25dbf4; width: 250px; height: 250px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                    <div style="background-color: #ffffff; border-radius: 50%; width: 203px; height: 203px; display: flex; align-items: center; justify-content: center;">
+                        {% if user.profile_picture %}
+                            <img loading="lazy" src="{{ user.profile_picture.url }}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
                         {% else %}
-                            <img src="{% static 'imgs/profilepicdefault.jpg' %}" alt="Default Profile Picture">
-                        {% endif %}
-                    </div>
-                    <div class="input-group">
-                        <label for="id_profile_picture">Profile Picture: </label>
-                        <input type="file" name="profile_picture" id="id_profile_picture">
-                        {% if form.instance.profile_picture %}
-                            <div>
-                                <input type="checkbox" name="clear_profile_picture" id="clear_profile_picture">
-                                <label for="clear_profile_picture">Clear current profile picture</label>
-                            </div>
+                            <img loading="lazy" src="{% static 'imgs/profilepicdefault.jpg' %}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
                         {% endif %}
                     </div>
                 </div>
+                <div class="card mt-n4" style="background-color: #25dbf4; border-radius: 20px; border: none;">
+                    <div class="card-body text-center">
+                        <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif; color: #fff;">Hi {{ user.username }}!</h2>
+                        <div class="list-group mt-3">
+                            <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action" style="font-weight: 600; border-radius: 20px;">Vaccine Records</a>
+                            <br>
+                            <a href="" class="list-group-item list-group-item-action text-center" style="background-color: #fff; color: #25dbf4; font-weight: 600; border-radius: 20px;">Edit Profile</a>
+                            <br>
+                            <a href="{% url 'contactus' %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
+                            <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        
+            <!-- //main content// -->
+        <div class="main">
+            <div class="fourth-line">
+                <div class="password-change-form">
+                    <h3>Change Password</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ password_form.as_p }}
+                        <button type="submit" name="change_password">Change Password</button>
+                    </form>
+                </div>
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        {% if 'password' in message.extra_tags %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                            <span class="alert-close">&times;</span>
+                            {{ message }}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
-            <div class="line2">
-                {% csrf_token %}
-                <div class="first-line">
-                    <div>
-                        <label for="{{ form.first_name.id_for_label }}">First Name:</label>
-                        {{ form.first_name }}
+            <div class="container-form">
+                <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: row;">
+                    <div class="line">
+                        <div class="profile-picture-container">
+                            <div class="profile-picture">
+                                {% if form.instance.profile_picture %}
+                                    <img id="profile-picture-preview" src="{{ form.instance.profile_picture.url }}" alt="Profile Picture">
+                                {% else %}
+                                    <img id="profile-picture-preview" src="{% static 'imgs/profilepicdefault.jpg' %}" alt="Default Profile Picture">
+                                {% endif %}
+                            </div>
+                            <div class="input-group">
+                                <label for="id_profile_picture">Profile Picture: </label>
+                                <input type="file" name="profile_picture" id="id_profile_picture">
+                                {% if form.instance.profile_picture %}
+                                    <div class="prof">
+                                        <input type="checkbox" name="clear_profile_picture" id="clear_profile_picture">
+                                        <label for="clear_profile_picture">Clear current profile picture</label>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div>
-                        <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
-                        {{ form.last_name }}
-                    </div>
-                    <div>
-                        <div class="birthday-field">
-                            <label for="{{ form.birthday.id_for_label }}">Birthday:</label>
-                        {{ form.birthday }}
+                    <div class="line2">
+                        {% csrf_token %}
+                        <div class="first-line">
+                            <div>
+                                <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+                                {{ form.first_name }}
+                            </div>
+                            
+                            <div>
+                                <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+                                {{ form.last_name }}
+                            </div>
+                            <div>
+                                <div class="birthday-field">
+                                    <label for="{{ form.birthday.id_for_label }}">Birthday:</label>
+                                {{ form.birthday }}
+                                </div>
+                                
+                            </div>
+                            <div>
+                                <div class="sex-field">
+                                    <label for="{{ form.sex.id_for_label }}">Sex:</label>
+                                    {{ form.sex }}
+                                </div>
+                            </div>  
+                        </div>
+            
+                        <div class="second-line">
+                            <div class="email-field">
+                                <label for="{{ form.email.id_for_label }}">Email:</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="address-field">
+                                <label for="{{ form.address.id_for_label }}">Address:</label>
+                                {{ form.address }}
+                            </div>
                         </div>
                         
-                    </div>
-                    <div>
-                        <div class="sex-field">
-                            <label for="{{ form.sex.id_for_label }}">Sex:</label>
-                            {{ form.sex }}
+                        <div class="third-line">
+                            <div class="third-line1">
+                                <div class="occupation-field">
+                                    <label for="{{ form.occupation.id_for_label }}">Occupation:</label>
+                                    {{ form.occupation }}
+                                </div>
+                                <div class="status-field">
+                                    <label for="{{ form.civil_status.id_for_label }}">Civil Status:</label>
+                                    {{ form.civil_status }}
+                                </div>
+                            </div>
+                            <div class="third-line2">
+                                <button type="submit" class="save-changes">Save</button>
+                            </div>
                         </div>
-                    </div>  
-                </div>
-    
-                <div class="second-line">
-                    <div class="email-field">
-                        <label for="{{ form.email.id_for_label }}">Email:</label>
-                        {{ form.email }}
                     </div>
-                    <div class="address-field">
-                        <label for="{{ form.address.id_for_label }}">Address:</label>
-                        {{ form.address }}
-                    </div>
-                </div>
-                
-                <div class="third-line">
-                    <div class="occupation-field">
-                        <label for="{{ form.occupation.id_for_label }}">Occupation:</label>
-                        {{ form.occupation }}
-                    </div>
-                    <div>
-                        <label for="{{ form.civil_status.id_for_label }}">Civil Status:</label>
-                        {{ form.civil_status }}
-                    </div>
-                </div>
-                
-                <div class="fourth-line">
-                    <button type="submit">Save Changes</button>
-                </div>
-
+                </form>
             </div>
+        </div>
+        </div>
 
-        </form>
-    </div>
-
+         </div>
     
 
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("#{{ form.birthday.id_for_label }}", {
-            dateFormat: "Y-m-d",
-            maxDate: "today",
-            altInput: true,
-            altFormat: "F j, Y",
-            disableMobile: true
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#{{ form.birthday.id_for_label }}", {
+        dateFormat: "Y-m-d",
+        maxDate: "today",
+        altInput: true,
+        altFormat: "F j, Y",
+        disableMobile: true
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var closeButtons = document.querySelectorAll('.alert-close');
+        closeButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var alert = this.parentElement;
+                alert.style.opacity = '0';
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 300);
+            });
         });
-    </script>
+
+        var fileInput = document.getElementById('id_profile_picture');
+        var imagePreview = document.getElementById('profile-picture-preview');
+        var originalSrc = imagePreview.src;
+
+        fileInput.addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = originalSrc;
+            }
+        });
+
+        var clearCheckbox = document.getElementById('clear_profile_picture');
+        if (clearCheckbox) {
+            clearCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    imagePreview.src = "{% static 'imgs/profilepicdefault.jpg' %}";
+                } else {
+                    imagePreview.src = originalSrc;
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>

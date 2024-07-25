@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+</head>
+<style>
+    .col-md-9 {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.75); 
+        border: 1px solid #dee2e6;
+        border-radius: 2.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: center; 
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        justify-content: center; 
+    }
+    .contact-info {
+        /* background-color: antiquewhite; */
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: 300px;
+    }
+
+    .contact-icon {
+        color: #25DBF4;
+        font-size: 30px;
+        margin-right: 15px; /* This adds space between the icon and text */
+    }
+
+    .contact-text {
+        vertical-align: middle; /* This aligns the text vertically with the icon */
+        color: #25DBF4;
+    }
+    body {
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95); /* White with 50% opacity */
+            z-index: -1; /* Ensure it is behind the content */
+        }
+</style>
+<body>
+    <div class="background-overlay"></div>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/Immunolog-logo.png' %}" alt="Immunolog" width="200" height="100">
+            </a>
+            <div class="ml-auto">
+                Hi {{ user.username }}
+                <a href="{% url 'signout' %}" class="btn btn-link">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- user profile and table -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-3">
+                <div class="card mb-3" style="border: none; border-radius: 50%; background-color: #25dbf4; width: 250px; height: 250px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                    <div style="background-color: #ffffff; border-radius: 50%; width: 203px; height: 203px; display: flex; align-items: center; justify-content: center;">
+                        {% if user.profile_picture %}
+                            <img loading="lazy" src="{{ user.profile_picture.url }}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+                        {% else %}
+                            <img loading="lazy" src="{% static 'imgs/profilepicdefault.jpg' %}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card mt-n4" style="background-color: #25dbf4; border-radius: 20px; border: none; margin-bottom: 20px;">
+                    <div class="card-body text-center">
+                        <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif; color: #fff;">Hi {{ user.username }}!</h2>
+                        <div class="list-group mt-3">
+                            <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action" style="font-weight: 600; border-radius: 20px;">Vaccine Records</a>
+                            <br>
+                            <a href="{% url 'editprofile' pk=pk %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Edit Profile</a>
+                            <br>
+                            <a href="" class="list-group-item list-group-item-action text-center" style="background-color: #fff; color: #25dbf4; font-weight: 600; border-radius: 20px;">Contact Us</a>
+                            <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="col-md-9">
+                <img src="{% static 'images/Immunolog-logo.jpg' %}" alt="Immunolog" width="600" height="auto">
+                <div class="contact-info">
+                    <p><i class="fa-regular fa-envelope contact-icon"></i><span class="contact-text">immunologcorporation@gmail.com</span></p>
+        <p><i class="fa-solid fa-phone contact-icon"></i><span class="contact-text">09394503727</span></p>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

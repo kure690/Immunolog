@@ -1,35 +1,50 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    padding: 40px;
-    /* background-color: #001f83; */
+
+
+
+
+.main {
+    flex: 1;
+    margin-left: 20px;
+}
+/* .Body-container {
     justify-content: flex-start;
     display: flex;
     flex-direction: row;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 40px;
+    
+    
+
+} */
 .container {
     width: 100%;
     height: 100%;
-    background: white;
-    padding: 20px;
+    /* background: rgb(255, 0, 0); */
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    background-color: #FFFFFF;
-    margin-left: 20px;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    
+}
+
+.container-form {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    background-color: rgba(248, 249, 250, 0.75);
+    border: 1px solid #dee2e6;
+    border-radius: 2.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
 }
 
 h1 {
     text-align: center;
     color: #333;
-}
-form div {
-    margin-bottom: 15px;
 }
 label {
     display: block;
@@ -100,7 +115,7 @@ button:hover {
     align-items: center;
     gap: 10px;
     padding: 1rem 1rem 0.5rem 1rem;
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
 .birthday-field {
@@ -119,37 +134,117 @@ button:hover {
     align-items: center;
     gap: 10px;
     padding: 0 1rem 0.5rem 1rem;
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 .address-field {
     width: 100%; /* Adjust as needed */
 }
 
 .email-field {
-    width: 40%; /* Adjust as needed */
+    width: 60%; /* Adjust as needed */
 }
 
 .third-line {
     /* background-color: #eaff00; */
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: end;
+    padding: 0 1rem 0 1rem;
+    justify-content: space-between;
+}
+.third-line1 {
+    margin-bottom: 0;
+    /* background-color: #333; */
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
     gap: 10px;
-    padding: 0 1rem 0.5rem 1rem;
+}
+.third-line2 {
+    margin: 0;
+    height: 100%;
+    width: 15%;
+    /* background-color: #430edf; */
+    
+}
+.line2 {
+    padding: 0;
+}
+
+.save-changes {
+    height: 40px;
+    width: 100%;
+}
+.occupation-field {
+    width: 40%; /* Adjust as needed */
     margin-bottom: 0;
 }
 
-.occupation-field {
-    width: 40%; /* Adjust as needed */
+.status-field {
+    margin-bottom: 0;
 }
+
 .fourth-line {
     /* background-color: #eaff00; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: end;
     gap: 10px;
-    padding: 0 1rem 0.5rem 1rem;
     margin-bottom: 0;
+    /* background-color: #25dbf4; */
 }
 
+.password-change-form {
+    padding: 20px;
+    background-color: rgba(248, 249, 250, 0.75);
+    border: 1px solid #dee2e6;
+    border-radius: 2.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.password-change-form h3 {
+    margin-bottom: 15px;
+}
+
+.password-change-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.password-change-form form p {
+    margin-bottom: 15px;
+}
+
+.password-change-form form button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    background-color: #25dbf4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.password-change-form form button:hover {
+    background-color: #1fc8e0;
+}
+
+.prof {
+    display: flex;
+    gap: 5px;
+    /* background-color: #25DBF4; */
+    align-items: center;
+    padding: 0;
+    padding-left: 10px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2rem;
+    /* background-color: #23C3D9; */
+    padding: 1rem;
+    
+}

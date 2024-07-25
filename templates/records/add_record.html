@@ -8,45 +8,52 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-        .modal-warning-text {
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-            color: #25dbf4;
-        }
-        .modal-body .additional-text {
-            font-size: 1.25rem;
-            text-align: center;
-        }
-        .modal-header {
-            border-bottom: none;
-        }
-        .modal-footer {
+        .image-display-container {
+            width: 350px;
+            height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px auto;
+            display: flex;
             justify-content: center;
-            border-top: none;
+            align-items: center;
         }
-        .modal-footer .btn {
-            font-size: 1.25rem;
-            font-weight: bold;
-            width: 100px;
-            border-radius: 20px;
+        .image-display-container img {
+            max-width: 100%;
+            max-height: 200px;
         }
-        .modal-footer .btn-primary {
-            background-color: #25dbf4;
-            border: none;
+        body {
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
         }
-        .modal-footer .btn-secondary {
-            background-color: #ccc;
-            border: none;
-            color: #333;
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: -1; 
+        }
+        .col-md-9 {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7); 
+            border: 1px solid #dee2e6;
+            border-radius: 2.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
     </style>
 </head>
 
 <body>
+    <div class="background-overlay"></div>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -67,7 +74,11 @@
                 <aside>
                     <div class="card mb-3" style="border: none; border-radius: 50%; padding: 20px; background-color: #25dbf4; width: 250px; height: 250px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
                         <div class="profile-picture-container" style="background-color: #ffffff; border-radius: 50%; width: 203px; height: 203px; display: flex; align-items: center; justify-content: center;">
-                            <img loading="lazy" src="path_to_image.jpg" class="img-fluid rounded-circle" style="width: 100%;" alt="">
+                            {% if user.profile_picture %}
+                            <img loading="lazy" src="{{ user.profile_picture.url }}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+                        {% else %}
+                            <img loading="lazy" src="{% static 'imgs/profilepicdefault.jpg' %}"  class="img-fluid rounded-circle" style="width: 100%; height: 100%; " alt="">
+                        {% endif %}
                         </div>
                     </div>
                     <div class="card mt-n4" style="background-color: #25dbf4; border-radius: 20px; border: none;">
@@ -76,9 +87,9 @@
                             <div class="list-group mt-3">
                                 <a href="#" class="list-group-item list-group-item-action" style="background-color: #fff; color: #25dbf4; font-weight: 600; border-radius: 20px;">Vaccine Records</a>
                                 <br>
-                                <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Edit Profile</a>
+                                <a href="{% url 'editprofile' pk=pk %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Edit Profile</a>
                                 <br>
-                                <a href="#" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
+                                <a href="{% url 'contactus' %}" class="list-group-item list-group-item-action text-center" style="font-weight: 600; border-radius: 20px;">Contact Us</a>
                                 <div style="background-color: #fff; height: 1px; margin-top: 15px; margin-bottom: 50px;"></div>
                             </div>
                         </div>
@@ -92,8 +103,8 @@
                     <a href="#" class="back-button" style="font-weight: bold; color: #25dbf4;"><i class="fas fa-arrow-circle-left fa-2x"></i></a>
                     <h1 class="text-primary ml-3" style="font-weight: bold; font-size: 3.5rem; color: #25dbf4 !important;">Add Vaccine Record</h1>
                 </div>
-                <div class="card p-4 mt-3" style="background-color: #fbfbf9; border-radius: 20px;">
-                    <div class="card-body">
+                <div class="card p-4 mt-3" style="background-color: rgba(251, 251, 249, 0.7); border-radius: 20px; padding-bottom: 0;">
+                    <div class="card-body" style="padding-bottom: 0;">
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             
@@ -139,8 +150,13 @@
                                 {% endfor %}
                             </div>
 
-                            <div class="form-group text-center">
-                                <button type="submit" class="btn btn-primary" style="font-weight: bold;">Save</button>
+                            <!-- Image display container -->
+                            <div class="image-display-container">
+                                <img id="uploadedImage" src="{% static 'images/template.avif' %}" alt="Uploaded Image">
+                            </div>
+
+                            <div class="form-group text-center" style="margin-bottom: 0;">
+                                <button type="submit" class="btn btn-primary" style="font-weight: bold;">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -149,33 +165,22 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="leavePageModal" tabindex="-1" role="dialog" aria-labelledby="leavePageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="leavePageModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-warning-text">WARNING!</div>
-                    <div class="additional-text mt-2">Your changes have not been saved.<br>Are you sure you want to leave this page?</div>
-                </div>
-                <div class="modal-footer">
-                    <a href="{% url 'dashboard' %}" class="btn btn-primary">YES</a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        $(document).ready(function() {
-            $('.back-button').click(function(e) {
-                e.preventDefault();
-                $('#leavePageModal').modal('show');
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.querySelector('input[type="file"]');
+            const imageDisplay = document.getElementById('uploadedImage');
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        imageDisplay.src = e.target.result;
+                        imageDisplay.style.display = 'block';
+                    }
+                    
+                    reader.readAsDataURL(e.target.files[0]);
+                }
             });
         });
     </script>
