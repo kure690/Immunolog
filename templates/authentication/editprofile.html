@@ -61,7 +61,7 @@
                 </div>
                 <div class="card mt-n4" style="background-color: #25dbf4; border-radius: 20px; border: none;">
                     <div class="card-body text-center">
-                        <h2 class="mt-4" style="font-weight: 900; font-size: 40px; font-family: Roboto, sans-serif; color: #fff;">Hi {{ user.username }}!</h2>
+                        <h2 class="mt-4" style="font-weight: 900; font-size: 25px; font-family: Roboto, sans-serif; color: #fff;">Hi {{ user.username }}!</h2>
                         <div class="list-group mt-3">
                             <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action" style="font-weight: 600; border-radius: 20px;">Vaccine Records</a>
                             <br>
@@ -90,8 +90,10 @@
                     {% for message in messages %}
                         {% if 'password' in message.extra_tags %}
                         <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
-                            <span class="alert-close">&times;</span>
                             {{ message }}
+                            <button type="button" class="close" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         {% endif %}
                     {% endfor %}
@@ -233,6 +235,15 @@
                 }
             });
         }
+        document.querySelectorAll('.alert .close').forEach(function(closeButton) {
+        closeButton.addEventListener('click', function() {
+            var alert = this.closest('.alert');
+            alert.style.opacity = '0';
+            setTimeout(function() {
+                alert.style.display = 'none';
+            }, 300);
+        });
+    });
     });
 </script>
 </body>
