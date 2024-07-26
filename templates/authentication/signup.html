@@ -165,7 +165,7 @@
             var messageContainer = document.getElementById('message-container');
             if (data.success) {
                 messageContainer.className = 'alert alert-success';
-                messageContainer.textContent = 'Sign up successful! Redirecting to login page...';
+                messageContainer.textContent = 'Sign up successful! Redirecting to dashboard...';
                 setTimeout(() => {
                     window.location.href = "{% url 'signin' %}";
                 }, 3000);
